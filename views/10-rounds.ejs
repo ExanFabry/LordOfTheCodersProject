@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10 Rounds | Lord Of The Coders</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/10rounds.css" />
+    <script src="javascript\hamburger-menu.js" defer></script>
+    <script src="javascript\10rounds.js" defer></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/assets/lord-of-the-coders-logo.png"
+    />
+    <audio autoplay loop>
+      <!-- https://archive.org/details/TheLordOfTheRings_OST -->
+      <source src="/assets/theshire.mp3" type="audio/mpeg" />
+    </audio>
+  </head>
+  <body>
+    <%- include("partials/header") %>
+    <main>
+      <section class="quote-container">
+        <button id="Favorite-Button" aria-label="Add to favorites">
+          <img
+            id="favBut"
+            src="/assets/heart.png"
+            alt="Button"
+            width="35"
+            height="35"
+          />
+        </button>
+
+        <span class="score">8/10</span>
+        <section id="quote-section">
+          <blockquote>
+            "Even the smallest person can change the course of the future."
+          </blockquote>
+          <p>Wie zei het? In welke film?</p>
+        </section>
+        <span class="amount">14/20</span>
+        <button id="Blacklist-Button" aria-label="Add to blacklist">
+          <img
+            id="blackBut"
+            src="/assets/forbidden.png"
+            alt="Button"
+            width="30"
+            height="30"
+          />
+        </button>
+      </section>
+
+      <section>
+        <article id="karakter">
+          <h3>
+            <img src="\assets\people.png" alt="people" width="35" height="35" />
+          </h3>
+          <button id="karakter-button">Gandalf</button>
+          <button id="karakter-button">Galadriel</button>
+          <button id="karakter-button">Bilbo</button>
+        </article>
+        <article id="film">
+          <h3>
+            <img
+              src="\assets\clapperboard.png"
+              alt="clapperboard"
+              width="35"
+              height="35"
+            />
+          </h3>
+          <button id="film-button">The Fellowship of the Ring</button>
+          <button id="film-button">The Two Towers</button>
+          <button id="film-button">The Return of the King</button>
+        </article>
+      </section>
+
+      <section id="submit-section">
+        <button id="Submit-button" class="next-button">Submit</button>
+      </section>
+    </main>
+
+    <nav id="nav-menu" class="d-none">
+      <ul class="align-items-center text-right">
+        <li class="p-2" class="d-flex justify-content-center text-right">
+          <a href="/homepage.html"
+            ><img src="assets/house-black-silhouette-without-door.png" alt=""
+          /></a>
+        </li>
+        <li class="p-2" class="d-flex justify-content-center text-right">
+          <a href="/favorite.html"><img src="assets/heart.png" alt="" /></a>
+        </li>
+        <li class="p-2" class="d-flex justify-content-center text-right">
+          <a href="/blacklist.html"
+            ><img src="assets/forbidden.png" alt=""
+          /></a>
+        </li>
+        <li class="p-2" class="d-flex justify-content-center text-right">
+          <a href="/highscore.html"><img src="assets/trophy.png" alt="" /></a>
+        </li>
+        <li class="p-2" class="d-flex justify-content-center text-right">
+          <a href="/index.html"><img src="assets/logout.png" alt="" /></a>
+        </li>
+      </ul>
+    </nav>
+    <%- include("partials/footer") %>

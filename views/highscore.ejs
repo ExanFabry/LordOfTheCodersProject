@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highscores | Lord Of The Coders</title>
+    <!-- Reset css -->
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="nofollow" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- General css -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Highscore css -->
+    <link rel="stylesheet" href="css/highscore.css">
+    <!-- Javascript hamburger menu -->
+    <script src="javascript/hamburger-menu.js" defer></script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/lord-of-the-coders-logo.png">
+    <!-- Audio autoplays in a loop -->
+    <audio autoplay loop>
+        <!-- https://archive.org/details/TheLordOfTheRings_OST -->
+        <source src="/assets/theshire.mp3" type="audio/mpeg">
+    </audio>
+</head>
+<body>
+    <%- include("partials/header") %>
+    <main class="d-flex flex-column align-items-center">
+        <img src="assets/scroll.jpg" alt="scroll">
+        <section class="text">
+            <h1 class="d-flex flex-column align-items-center" id="highscore-title">Highscores</h1>
+            <section class="d-flex justify-content-between align-items-center scores">
+                <article class="d-flex flex-column justify-content-between align-items-center">
+                    <h1>10 Rounds</h1>
+                    <h1>3/10</h1>
+                </article>
+                <article class="d-flex flex-column justify-content-between align-items-center">
+                    <h1>Sudden death</h1>
+                    <h1>13</h1>
+                </article>
+            </section>
+        </section>
+    </main>
+    </section>
+    <%- include("partials/footer") %>
+
+<!-- 
+    align-items-center: Centreert de flex items verticaal binnen de container.
+    d-flex: Maakt het element een flex container.
+    d-none: Verbergt het element door display: none toe te passen.
+    h-100: Stelt de hoogte van het element in op 100% van de oudercontainer.
+    justify-content-start: Plaatst het element aan het begin van de flex container.
+    justify-content-between: Verdeelt de ruimte tussen de flex items gelijkmatig, met het eerste item aan het begin en het laatste item aan het einde.
+    justify-content-center: Centreert het element horizontaal binnen de flex container.
+    justify-content-end: Plaatst het element aan het einde van de flex container.
+    p-2: Voegt padding toe aan het element.
+    text-right: Zorgt ervoor dat de tekst rechts uitgelijnd is.
+-->

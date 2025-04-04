@@ -1,0 +1,121 @@
+body {
+  background-image: url("/assets/highscores-startpage-background.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+main {
+  margin: 50px auto;
+  max-width: 1000px;
+  text-align: center;
+}
+main h2 {
+  font-size: 70px;
+  color: white;
+}
+
+/* gamemodes */
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  overflow: hidden;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 80%;
+  transition: transform 0.3s ease-in-out;
+}
+section:hover {
+  transform: scale(1.05);
+}
+
+/* afbeeldingen */
+section a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+section img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* tekst */
+section article {
+  text-align: center;
+  padding: 15px;
+}
+section h3 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #e3a722;
+  text-transform: uppercase;
+}
+section p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: white;
+}
+
+/* media queries */
+@media (min-width: 768px) {
+  section {
+    flex-direction: row;
+    align-items: stretch;
+    text-align: left;
+  }
+
+  section a {
+    width: 40%;
+  }
+
+  section img {
+    width: 100%;
+    height: 100%;
+  }
+
+  section article {
+    width: 60%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    max-width: 95%;
+    margin: 30px auto;
+  }
+
+  section {
+    flex-direction: column;
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  section a {
+    width: 100%;
+  }
+
+  section img {
+    width: 100%;
+    height: auto;
+  }
+
+  section article {
+    width: 100%;
+    padding: 10px;
+  }
+
+  section h3 {
+    font-size: 1.5rem;
+  }
+
+  section p {
+    font-size: 1rem;
+  }
+}

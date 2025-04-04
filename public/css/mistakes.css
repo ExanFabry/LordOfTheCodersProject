@@ -1,0 +1,45 @@
+body {
+    background-image: url("/assets/10-rounds-wrong-answers-background.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+main{
+    padding: 15px;
+    margin: 5vw;
+ 
+}
+h2{
+    border: 2px;
+    display: flex;
+    justify-content: space-around;
+    border-radius: 10px;
+    background-color: #554827;
+    color: lightgrey;
+    padding: 15px;
+}
+section{
+    border: 5px solid rgba(227, 167, 34,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 25px;
+}
+
+.listkader, h3,.answer{
+    color: lightgrey;
+    opacity: 1;
+}
+
+.listkader{
+    padding-top: 10px;
+    padding-left: 10px;
+    border-bottom: 2px solid rgba(227, 167, 34,0.5);
+    width: 100%;
+    background-color: #5c5234cc;
+}
+.kader{
+    border: 4px solid rgba(227, 167, 34,0.5);
+    border-radius: 15px; 
+    margin-top: 30px;
+   
+}

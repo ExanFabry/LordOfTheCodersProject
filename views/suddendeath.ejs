@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudden Death | Lord Of The Coders</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/SuddenDeath.css" />
+    <script src="javascript/hamburger-menu.js" defer></script>
+    <script src="javascript\suddendeath.js" defer></script>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="/assets/lord-of-the-coders-logo.png"
+    />
+    <audio autoplay loop>
+      <!-- https://archive.org/details/TheLordOfTheRings_OST -->
+      <source src="/assets/theshire.mp3" type="audio/mpeg" />
+    </audio>
+  </head>
+  <body>
+    <%- include("partials/header") %>
+    <main>
+      <section class="quote-container">
+        <button id="Favorite-Button" aria-label="Add to favorites">
+          <img
+            id="favBut"
+            src="\assets\white_heart.png"
+            alt="Button"
+            width="35"
+            height="35"
+          />
+        </button>
+        <section id="quote-section">
+          <span class="score">0/10</span>
+          <blockquote>
+            "Certainty of death. Small chance of success. What are we waiting
+            for?"
+          </blockquote>
+          <p>Wie zei het? In welke film?</p>
+        </section>
+        <button id="Blacklist-Button" aria-label="Add to blacklist">
+          <img
+            id="blackBut"
+            src="\assets\white_forbidden.png"
+            alt="Button"
+            width="35"
+            height="35"
+          />
+        </button>
+      </section>
+
+      <section>
+        <article id="karakter">
+          <h3>
+            <img
+              src="\assets\white_people_icon.png"
+              alt="person"
+              width="35"
+              height="35"
+            />
+          </h3>
+          <button id="karakter-button">Merry</button>
+          <button id="karakter-button">Gimli</button>
+          <button id="karakter-button">Legolas</button>
+        </article>
+
+        <article id="film">
+          <h3>
+            <img
+              src="assets\clapperboard_white.png"
+              alt="clapboard"
+              width="35"
+              height="35"
+            />
+          </h3>
+          <button id="film-button">The Fellowship of the Ring</button>
+          <button id="film-button">The Two Towers</button>
+          <button id="film-button">The Return of the King</button>
+        </article>
+      </section>
+
+      <section id="submit-section">
+        <button id="Submit-button" class="next-button">Submit</button>
+      </section>
+    </main>
+    <%- include("partials/footer") %>

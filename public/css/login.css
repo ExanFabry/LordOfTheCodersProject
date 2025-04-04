@@ -1,0 +1,126 @@
+body {
+  background-image: url("../assets/login-register-background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+}
+
+#the-lord-text {
+  font-size: 60px;
+  color: #e3a722;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  margin-bottom: 20px;
+}
+
+main article {
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px #e3a722;
+  width: 300px;
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  background: black;
+  color: white;
+  box-sizing: border-box;
+}
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  margin-left: -54px;
+  margin-right: -104px;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  background: gold;
+  color: black;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+form button:hover {
+  background: #e3a722;
+  transform: scale(1.05);
+}
+
+form div {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+form p a {
+  color: #e3a722;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+form p a:hover {
+  text-decoration: underline;
+}
+footer article {
+  box-shadow: none;
+}
+
+/* media-queries */
+@media (min-width: 768px) {
+  #the-lord-text {
+    font-size: 45px;
+  }
+
+  article {
+    width: 90%;
+    padding: 20px;
+  }
+
+  form input,
+  form button {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  #the-lord-text {
+    font-size: 35px;
+  }
+
+  article {
+    width: 95%;
+    padding: 15px;
+  }
+
+  form input,
+  form button {
+    padding: 6px;
+  }
+
+  form div {
+    flex-direction: column;
+    text-align: center;
+  }
+}

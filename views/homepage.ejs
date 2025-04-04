@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage | Lord Of The Coders</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="nofollow" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/homepage.css">
+    <script src="javascript/hamburger-menu.js" defer></script>
+    <link rel="icon" type="image/x-icon" href="/assets/lord-of-the-coders-logo.png">
+    <audio autoplay loop>
+        <!-- https://archive.org/details/TheLordOfTheRings_OST -->
+        <source src="/assets/theshire.mp3" type="audio/mpeg">
+    </audio>
+</head>
+<body>
+    <%- include("partials/header") %>
+    <main>
+        <h2>Kies je quiz</h2>
+            <section>
+                <a href="/10-rounds"><img src="assets/10rounds-showpicture.jpg" alt="TenRounds"></a>
+                <article>
+                    <h3>Ten Rounds</h3>
+                    <p>Stap in een zenuwslopende strijd van tien vragen waarin elk punt telt. 
+                       Voor elke perfecte combinatie scoor je twee punten, maar zelfs een halve juiste gok kan je nog één punt opleveren. 
+                       Na tien rondes stopt het spel en wordt je eindscore onthuld. Maar dat is niet alles… 
+                       Kun jij de high score verbreken en jezelf naar de top spelen? 
+                       Test je skills, daag jezelf uit en bewijs dat jij 'The Lord' van deze modus bent!</p>
+                </article>
+            </section>
+            <section>
+                <a href="/suddendeath"><img src="assets/sudden-death-showpicture.jpg" alt="SuddenDeath"></a>
+                <article>
+                    <h3>Sudden Death</h3>
+                    <p>Geen ruimte voor fouten. Geen tweede kansen. 
+                       In Sudden Death draait alles om precisie en een ijzersterke focus. 
+                       Elke juiste combinatie brengt je een stap dichter bij de ultieme reeks, 
+                       maar maak je een fout? Dan is het game over. Geen genade. 
+                       Je ziet direct hoe ver je bent gekomen, maar had je nóg langer kunnen doorgaan? 
+                       Hoeveel goede antwoorden achter elkaar kun jij verzamelen voordat je ten onder gaat? 
+                       Zet je schrap en laat zien wat je waard bent!</p>
+                </article>
+            </section>
+    </main>
+    <%- include("partials/footer") %>

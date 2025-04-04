@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="nl-BE">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Lord Of The Coders</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="nofollow" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" type="image/x-icon" href="/assets/lord-of-the-coders-logo.png">
+    <script src="javascript/login.js" defer></script>
+    <audio autoplay loop>
+        <!-- https://archive.org/details/TheLordOfTheRings_OST -->
+        <source src="/assets/theshire.mp3" type="audio/mpeg">
+    </audio>
+</head>
+<body>
+    <main>
+        <p id="the-lord-text">The Lord Of The Rings</p>
+        <article>
+                <h2>Login</h2>
+                <form>
+                    <input type="text" name="username" placeholder="Gebruikersnaam">
+                    <input type="password" name="password" placeholder="Wachtwoord">
+                    <p><a href="#">Wachtwoord vergeten?</a></p>
+                    <div>
+                        <input type="checkbox" name="remember">Onthoud mij
+                    </div>
+                    <p>Nog geen account? Registreer je<a href="/register"> hier</a></p>
+                    <a href="/home"><button type="submit">Inloggen</button></a>
+                </form>
+        </article>
+    </main>
+    <%- include("partials/footer") %>

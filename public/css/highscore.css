@@ -1,0 +1,71 @@
+body{
+    background-image: url("/assets/highscores-startpage-background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+main{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    position: relative;
+}
+main img, .text{
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+}
+.scores article{
+    border-radius: 10%;
+    margin: 1%;
+    background-color: #e3a722;
+}
+main article{
+    min-width: 50%;
+}
+.scores{
+    margin-left: -15%;
+    margin-right: -10%;
+    text-shadow: #ffffff 2px 2px 2px;
+}
+main{
+    min-height: 100vh;
+}
+#highscore-title{
+    mix-blend-mode: difference;
+    text-shadow: #e3a722 2px 2px 2px;
+}
+/* Media querries */
+@media (max-width: 1025px) {
+    main image{
+        min-width: 90vw;
+    }
+}
+@media (max-width: 835px) {
+    .scores{
+        margin-left: -22%;
+        margin-right: -17%;
+    }
+    main{
+        padding-top: 25%;
+        padding-bottom: 25%;
+    }
+}
+@media (max-width: 801px) {
+    main{
+        min-height: 100vh;
+    }
+}
+@media (max-width: 429px) {
+    main img{
+        max-width: 40vh;
+    }
+    main h1{
+        font-size: 1em;
+    }
+}
+@media (max-width: 376px) {
+    main h1{
+        font-size: 0.8em;
+    }
+}

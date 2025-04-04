@@ -1,0 +1,209 @@
+:root {
+  --primary-color: #6f6340; /* donker bruin */
+  --secondary-color: #c3b07d; /* licht bruin */
+  --accent-color: #e3a722; /* goud */
+}
+
+body {
+  background: url("/assets/sudden-death-background.jpg") no-repeat center center
+    fixed;
+  background-size: cover;
+  line-height: 1.6;
+}
+
+main {
+  margin: 5rem;
+  border: 5px solid rgba(227, 167, 34, 0.5);
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.quote-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  background-color: #731d0a;
+  color: lightgrey;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 50px;
+  text-align: center;
+  border: 5px solid rgba(227, 167, 34, 0.5);
+}
+
+.score {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+#quote-section {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.quote-container blockquote {
+  font-size: 1.5em;
+  font-style: italic;
+}
+
+.quote-container p {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.quote-container button {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin: 0 10px;
+}
+
+#karakter,
+#film {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #5c5234cc;
+  border: 4px solid rgba(192, 142, 36, 0.5); /*rgba(149, 109, 24, 0.777);*/
+  border-radius: 10px;
+  margin: 50px;
+  flex: 1; /* Beide nemen evenveel ruimte in */
+  width: 48%; /* Zorgt voor een kleine ruimte tussen de artikelen */
+  text-align: center;
+  padding-top: 15px;
+}
+
+#karakter h3,
+#film h3 {
+  margin-bottom: 15px;
+  font-size: 1.3em;
+}
+
+#karakter button,
+#film button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-top: 3px solid rgba(192, 142, 36, 0.5);
+  background-color: rgba(166, 43, 15, 1);
+  color: lightgray;
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+#karakter button:hover,
+#film button:hover {
+  background-color: #241d0dcc;
+}
+
+#submit-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.next-button {
+  text-align: center;
+  width: 20%;
+  height: 30%;
+  padding: 15px;
+  background-color: rgba(166, 43, 15, 1);
+  border-radius: 15px;
+  font-size: 1.3em;
+  cursor: pointer;
+  border: 3px solid rgba(227, 167, 34, 0.5);
+  color: lightgrey;
+}
+
+.next-button:hover {
+  background-color: #413924cc;
+}
+
+section {
+  display: flex;
+  justify-content: space-between;
+}
+
+#karakter button.active,
+#film button.active {
+  background-color: #413924cc;
+  border: 2px solid rgba(227, 167, 34, 0.5);
+}
+
+#Favorite-Button.active {
+  content: url("\assets\heart.png");
+}
+
+@media (max-width: 1024px) {
+  main {
+    margin: 1rem;
+  }
+
+  .quote-container {
+    flex-direction: column;
+    gap: 10px;
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .quote-container blockquote {
+    font-size: 1.3em;
+  }
+
+  .quote-container p {
+    font-size: 1.1em;
+  }
+
+  #karakter,
+  #film {
+    width: 100%;
+    margin: 10px;
+  }
+
+  .next-button {
+    width: 30%;
+  }
+}
+
+/* Media Queries voor Smartphones (max-width: 767px) */
+@media (max-width: 767px) {
+  main {
+    margin: 0.5rem;
+  }
+
+  .quote-container {
+    margin: 5px;
+    padding: 10px;
+  }
+
+  .quote-container blockquote {
+    font-size: 1.1em;
+  }
+
+  .quote-container p {
+    font-size: 1em;
+  }
+
+  #karakter button,
+  #film button {
+    font-size: 1.1rem;
+    padding: 8px;
+  }
+
+  .next-button {
+    width: 50%;
+    font-size: 1.1em;
+    padding: 10px;
+  }
+
+  section {
+    flex-direction: column;
+  }
+
+  #karakter,
+  #film {
+    width: 98%;
+    margin: 5px;
+  }
+}

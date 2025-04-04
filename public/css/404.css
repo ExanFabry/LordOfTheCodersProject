@@ -1,0 +1,24 @@
+body{
+    background-image: url("/assets/mount-doom-background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+main article{
+    background-color: #e3a722;
+    margin-top: 40vh;
+    margin-bottom: 40vh;
+    padding: 5vh;
+}
+@media (max-width: 500px) {
+    main h1{
+        font-size: 1em;
+    }
+    main h2{
+        font-size: 0.8em;
+    }
+    main article{
+        margin-top: 33.5vh;
+        margin-bottom: 33.5vh;
+    }
+}

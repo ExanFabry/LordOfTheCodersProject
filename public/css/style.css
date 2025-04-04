@@ -1,0 +1,126 @@
+header, footer{
+    background-color: black;
+    color: #e3a722;
+}
+header img{
+    width: 8%;
+    height: auto;
+}
+#hamburger-menu{
+    width: 5%;
+    height: auto;
+}
+header h1{
+    margin-top: 10%;
+    font-size: 2rem;
+}
+header article p, footer p {
+    font-size: 0.8rem;
+}
+*, header, footer{
+    font-family: 'lordOfTheRingsFont';
+}
+header article{
+    margin-right: 5%;
+}
+
+/*Footer*/
+footer > div, footer > p, footer > article {
+    flex: 1;
+    text-align: center;
+}
+footer{
+    padding-right: 1%;
+}
+footer img{
+    max-width: 10%;
+    height: auto;
+}
+footer article{
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+
+/*nav*/
+nav{
+    background-color: black;
+    width: 16.84vw;
+    transform: translateX(494%);
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    background-image: url(../assets/schuifmenu-all-pages.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+nav a, nav a:hover{
+    color:#e3a722;
+}
+nav a:hover{
+    text-decoration: none;
+    text-shadow: 1px 1px 15px white;
+}
+nav a{
+    padding: 1%;
+}
+nav img{
+    width: 1.5vw;
+    height: auto;
+}
+nav img:hover, #hamburger-menu:hover{
+    transform: scale(1.2);
+}
+
+/*Font*/
+@font-face {
+    font-family: lordOfTheRingsFont;
+    src: url(../assets/ringbearer.medium.ttf);
+}
+
+@media (max-width: 1080px) {
+    header article h1 {
+        font-size: 1.5rem;
+    }
+    header article p {
+        font-size: 0.6rem;
+    }
+    header img, #hamburger-menu{
+        width: 10%;
+        height: auto;
+    }
+    header article{
+        margin-right: 0%;
+    }
+    nav img{
+        width: 3vw;
+        height: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    header article h1 {
+        font-size: 1.5rem;
+    }
+    header article p {
+        font-size: 0.6rem;
+    }
+    header img, #hamburger-menu{
+        width: 15%;
+    }
+    footer{
+        padding-right: 3%;
+    }
+    footer img{
+        max-width: 20%;
+        height: auto;
+    }
+    header article{
+        margin-right: 5%;
+    }
+    nav img{
+        width: 4vw;
+        height: auto;
+    }
+}

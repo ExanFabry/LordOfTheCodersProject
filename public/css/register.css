@@ -1,0 +1,133 @@
+body {
+    background-image: url("../assets/login-register-background.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    position: relative;
+}
+
+#the-lord-text {
+    font-size: 60px;
+    color: #e3a722;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    margin-bottom: 20px;
+}
+
+main article {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 500px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px #e3a722;
+    box-sizing: border-box;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: white;
+}
+
+form {
+    width: 100%;
+}
+
+form article {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+    box-shadow: none;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background: black;
+    color: white;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    background: gold;
+    color: black;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+form button:hover {
+    background: #e3a722;
+    transform: scale(1.05);
+}
+
+footer article {
+    box-shadow: none;
+}
+
+@media (min-width: 1200px) {
+    main article {
+        max-width: 400px;
+    }
+}
+
+@media (min-width: 768px) {
+    #the-lord-text {
+        font-size: 45px;
+    }
+
+    main article {
+        padding: 20px;
+        width: 95%;
+    }
+
+    form article {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+
+    body {
+        background-size: auto 120%; 
+        background-position: top center; 
+        min-height: 100vh;
+    }
+
+    #the-lord-text {
+        font-size: 35px;
+    }
+
+    main {
+        height: auto;
+        padding: 40px 20px;
+    }
+
+    main article {
+        padding: 15px;
+        width: 100%;
+    }
+
+    form input, form button {
+        font-size: 16px;
+        padding: 12px;
+    }
+}

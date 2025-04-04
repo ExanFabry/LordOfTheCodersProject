@@ -1,0 +1,61 @@
+/* General */
+body {
+    background-image: url("/assets/landing-page-background.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+/* Main */
+main img{
+    width: 50%;
+}
+main article{
+    width: 32%;
+}
+main a, main section{
+    padding-top: 16.5%;
+    padding-bottom: 16.5%;
+    padding-left: 5%;
+}
+main a, main section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wrong-project:hover, .wrong-project:active, .wrong-project:focus{
+    box-shadow: 5px 10px 15px red;
+}
+.right-project:hover, .right-project:active, .right-project:focus{
+    box-shadow: 5px 10px 15px green;
+}
+main img:hover{
+    transform: scale(1.05);
+}
+
+/* Footer */
+footer{
+    margin-top: 5%;
+}
+
+/* Media querries */
+@media (max-width: 1080px) {
+    main article{
+        width: 50%;
+    }
+    footer img{
+        max-width: 20%;
+        height: auto;
+    }
+    main a, main section{
+        padding-top: 16.5%;
+        padding-bottom: 16.5%;
+    }
+}
+@media (max-width: 428px) {
+    main a, main section{
+        padding-top: 41%;
+        padding-bottom: 41%;
+    }
+}
