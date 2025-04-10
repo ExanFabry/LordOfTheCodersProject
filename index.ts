@@ -6,6 +6,7 @@ import { connect } from "./database";
 import session from "./session";
 import { User } from "./interfaces/types";
 import { login } from "./database";
+import { flashMiddleware } from "./flashMiddleware";
 
 //Import routers
 import loginRouter from "./routers/loginRouter";
@@ -18,8 +19,8 @@ import highscoreRouter from "./routers/highscore";
 import mistakesRouter from "./routers/mistakes";
 import resultRouter from "./routers/result";
 import suddendeathRouter from "./routers/suddendeath";
-import indexRouter from "./routers";
-import { flashMiddleware } from "./flashMiddleware";
+import indexRouter from "./routers/index";
+import invalidPageRouter from "./routers/404";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/highscore", highscoreRouter());
 app.use("/mistakes", mistakesRouter());
 app.use("/result", resultRouter());
 app.use("/suddendeath", suddendeathRouter());
+app.use("/404", invalidPageRouter());
 app.use("/", indexRouter());
 
 app.post("/login", async(req, res) => {
@@ -55,6 +57,9 @@ app.post("/login", async(req, res) => {
   } catch (e : any) {
       res.redirect("/login");
   }
+});
+app.use((req, res) => {
+  res.redirect("/404");
 });
 
 app.listen(app.get("port"), async() => {
