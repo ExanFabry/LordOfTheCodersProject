@@ -58,6 +58,11 @@ app.post("/login", async(req, res) => {
       res.redirect("/login");
   }
 });
+app.get("/logout", async(req, res) => {
+  req.session.destroy(() => {
+      res.redirect("/login");
+  });
+});
 app.use((req, res) => {
   res.redirect("/404");
 });
