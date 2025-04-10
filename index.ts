@@ -19,6 +19,7 @@ import mistakesRouter from "./routers/mistakes";
 import resultRouter from "./routers/result";
 import suddendeathRouter from "./routers/suddendeath";
 import indexRouter from "./routers";
+import { flashMiddleware } from "./flashMiddleware";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.json());
 app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 3000);
 app.use(session);
+app.use(flashMiddleware);
 
 //Routers
 app.use("/login", loginRouter());

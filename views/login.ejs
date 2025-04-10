@@ -19,6 +19,9 @@
         <p id="the-lord-text">The Lord Of The Rings</p>
         <article>
                 <h2>Login</h2>
+                <% if (message === "error") { %>
+                    <h2 style="color: red;">Login is fout</h2>
+                <% } %>
                 <form action="/login" method="post">
                     <input type="text" name="email" placeholder="Gebruikersnaam">
                     <input type="password" name="password" placeholder="Wachtwoord">

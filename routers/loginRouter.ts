@@ -2,12 +2,17 @@ import express from "express";
 import { User } from "../interfaces/types";
 import { login } from "../database";
 import { secureMiddleware } from "../secureMiddleware";
+import { NextFunction, Request, Response } from "express";
 
 export default function loginRouter() {
     const router = express.Router();
+    let error = "";
 
     router.get("/", async (req, res) => {
-        res.render("login");
+        console.log(req.session.message?.type);
+        res.render("login", {
+            message: error
+        });
     });
 
     router.post("/", async (req, res) => {
@@ -19,6 +24,8 @@ export default function loginRouter() {
             req.session.user = user;
             res.redirect("/home")
         } catch (e: any) {
+            req.session.message = {type: "error", message: e.message};
+            error = "error";
             res.redirect("/login");
         }
     });
