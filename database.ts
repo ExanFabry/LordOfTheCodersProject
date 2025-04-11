@@ -28,6 +28,17 @@ async function createInitialUser() {
     });
 }
 
+export async function registerUser(email: string | undefined, password: string | undefined) {
+    if (email === undefined || password === undefined) {
+        throw new Error("Email and password must be set in environment");
+    }
+    await userCollection.insertOne({
+        email: email,
+        password: await bcrypt.hash(password, saltRounds),
+        role: "USER"
+    });
+}
+
 async function exit() {
     try {
         await client.close();

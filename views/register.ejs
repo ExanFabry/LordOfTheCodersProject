@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/register.css">
     <link rel="icon" type="image/x-icon" href="/assets/lord-of-the-coders-logo.png">
-    <script src="javascript/register.js" defer></script>
     <audio autoplay loop>
         <!-- https://archive.org/details/TheLordOfTheRings_OST -->
         <source src="/assets/theshire.mp3" type="audio/mpeg">
@@ -20,12 +19,10 @@
         <p id="the-lord-text">The Lord Of The Rings</p>
         <article>
             <h2>Registreer</h2>
-            <form>
+            <form action="/register" method="post">
                 <article>
-                    <input type="text" name="username" placeholder="Gebruikersnaam">
-                    <input type="email" name="email" placeholder="E-mail">
+                    <input type="email" name="email" placeholder="E-mail"><br><br>
                     <input type="password" name="password" placeholder="Wachtwoord">
-                    <input type="password" name="confirm-password" placeholder="Herhaal wachtwoord">
                 </article>
                 <button type="submit">Account aanmaken</button>
             </form>
