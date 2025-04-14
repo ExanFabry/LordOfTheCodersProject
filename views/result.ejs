@@ -30,7 +30,11 @@
     <main>
       <h2>Score</h2>
       <p>12/20</p>
-      <button id="Home-Button">Home</button>
-      <button id="Mistakes-Button">Zie fouten</button>
+      <form action="/home" method="get">
+        <button type="submit" id="Home-Button">Home</button>
+      </form>
+      <form action="/mistakes" method="get">
+        <button type="submit" id="Mistakes-Button">Zie fouten</button>
+      </form>
     </main>
     <%- include("partials/footer") %>
