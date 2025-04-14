@@ -13,7 +13,8 @@ const mongoStore = new MongoDBStore({
 declare module 'express-session' {
     export interface SessionData {
         user?: User,
-        message: string | any
+        message: string | any,
+        rounds: number
     }
 }
 

@@ -31,31 +31,19 @@
     <main>
       <section class="quote-container">
         <button id="Favorite-Button" aria-label="Add to favorites">
-          <img
-            id="favBut"
-            src="/assets/heart.png"
-            alt="Button"
-            width="35"
-            height="35"
-          />
+          <img id="favBut" src="/assets/heart.png" alt="Button" width="35" height="35" />
         </button>
 
-        <span class="score">8/10</span>
+        <span class="score"><%= rounds %>/10</span>
         <section id="quote-section">
           <blockquote>
             "Even the smallest person can change the course of the future."
           </blockquote>
           <p>Wie zei het? In welke film?</p>
         </section>
-        <span class="amount">14/20</span>
+        <!-- <span class="amount">14/20</span> -->
         <button id="Blacklist-Button" aria-label="Add to blacklist">
-          <img
-            id="blackBut"
-            src="/assets/forbidden.png"
-            alt="Button"
-            width="30"
-            height="30"
-          />
+          <img id="blackBut" src="/assets/forbidden.png" alt="Button" width="30" height="30"/>
         </button>
       </section>
 
@@ -70,12 +58,7 @@
         </article>
         <article id="film">
           <h3>
-            <img
-              src="\assets\clapperboard.png"
-              alt="clapperboard"
-              width="35"
-              height="35"
-            />
+            <img src="\assets\clapperboard.png" alt="clapperboard" width="35" height="35"/>
           </h3>
           <button id="film-button">The Fellowship of the Ring</button>
           <button id="film-button">The Two Towers</button>
@@ -84,7 +67,18 @@
       </section>
 
       <section id="submit-section">
-        <button id="Submit-button" class="next-button">Submit</button>
+        <form action="10-rounds/decrease-rounds" method="POST">
+          <button type="submit" class="next-button">Vorige</button>
+        </form>
+        <% if (rounds === 10) { %>
+          <form action="/result" method="get">
+            <button id="Submit-button" class="next-button">Indienen</button>
+          </form>
+          <% } else { %>
+            <form action="10-rounds/increase-rounds" method="POST">
+              <button type="submit" class="next-button">Volgende</button>
+            </form>
+          <% } %>
       </section>
     </main>
 
