@@ -10,5 +10,12 @@ export default function blacklistRouter() {
             res.redirect("/login");
         }
     });
+    router.post("/", async (req,res)=>{
+        let quote: string = req.body.quote;
+        let answer: string = req.body.answer;
+        let result: string = req.body.result;
+        
+        
+    })
     return router;
 }
