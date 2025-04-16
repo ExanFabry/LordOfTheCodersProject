@@ -18,13 +18,13 @@ export interface SessionData {
 }
 
 export interface Quotes{
-    docs: {
+    // docs: {
         _id:  ObjectId;
         dialog:  string;
         movie:  string;
         character:  string;
         id:  string;
-    }[];
+    // }[];
 }
 
 export interface Movies{
