@@ -75,9 +75,15 @@
             <button id="Submit-button" class="next-button">Indienen</button>
           </form>
           <% } else { %>
-            <form action="10-rounds/increase-rounds" method="POST">
-              <button type="submit" class="next-button">Volgende</button>
+            <% if (questionAnsweredBoolean[rounds]) { %>
+              <form action="10-rounds/increase-rounds" method="POST">
+                <button type="submit" class="next-button">Volgende</button>
+              </form>
+            <% } else if(!questionAnsweredBoolean[rounds]) { %>
+            <form action="10-rounds/complete-question" method="POST">
+              <button type="submit" class="next-button">Indienen</button>
             </form>
+            <% } %>
           <% } %>
       </section>
     </main>
