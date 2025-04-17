@@ -52,6 +52,10 @@ export default function tenRoundsRouter() {
             if (!req.session.rounds) {
                 req.session.rounds = 1;
             }
+            if(req.session.rounds > 10){
+                req.session.rounds = 1;
+            }
+            console.log(req.session.rounds);
             res.render('10-rounds', { 
                 rounds: req.session.rounds,
                 quotes: quotes
@@ -67,6 +71,9 @@ export default function tenRoundsRouter() {
         if (req.session.user) {
             if (!req.session.rounds) {
                 req.session.rounds = 1;
+            }
+            if(req.session.rounds >= 10){
+                req.session.rounds = 0;
             }
             req.session.rounds += 1;
             res.redirect("/10-rounds");
