@@ -33,19 +33,14 @@ export default function tenRoundsRouter() {
                 }while(randomNumbers.includes(randomNumber))
                 //Steek de getallen in een array
                 randomNumbers.push(randomNumber);
-                // console.log(quotesArray);
-                console.log(randomNumber);
-                console.log(quotesArray.length);
             }
         }
-        console.log(randomNumbers);
 
         //Haal 10 quotes uit de api
         console.log(randomNumbers);
         for(let i: number = 0; i < 10; i++){
             quotes.push(quotesArray[randomNumbers[i]]);
         }
-        console.log(quotes);
 
         //Geef de quotes mee
         if (req.session.user) {
