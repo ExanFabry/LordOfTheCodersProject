@@ -1,7 +1,7 @@
 import express from "express";
 import { Quotes } from "../interfaces/types";
 import { getQuotes, quotesArray } from "../api";
-import { addToFavorite } from "../database";
+import { addToBlacklist, addToFavorite } from "../database";
 
 export let quotes: Quotes[] = [];
 export let questionAnsweredArrayOfTypeBoolean: boolean[] = [
@@ -81,6 +81,16 @@ export default function tenRoundsRouter() {
             res.redirect("/login");
         }
       });
+
+      router.post('/blacklist', (req, res) => {
+          if (req.session.user) {
+              addToBlacklist(req.session.rounds as number, req.session.blackListReason as string, req);
+              res.redirect("/10-rounds");
+          }
+          else {
+              res.redirect("/login");
+          }
+        });
 
     //Verhoogt de rounds variabele.
     router.post('/increase-rounds', (req, res) => {

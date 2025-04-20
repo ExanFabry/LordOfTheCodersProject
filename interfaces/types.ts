@@ -55,3 +55,10 @@ export interface FavoriteQuote{
     character: string;
     user: User | undefined;
 }
+
+export interface BlacklistQuote{
+    quote: string;
+    character: string;
+    user: User | undefined;
+    reason: string;
+}
