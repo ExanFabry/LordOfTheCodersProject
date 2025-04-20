@@ -28,6 +28,7 @@
   </head>
   <body>
     <%- include("partials/header") %>
+    <%= blackListReason = "Vind deze quote niet leuk"; %>
     <main>
       <section class="quote-container">
         <form action="10-rounds/favorite" method="post">
@@ -44,9 +45,11 @@
           <p>Wie zei het? In welke film?</p>
         </section>
         <!-- <span class="amount">14/20</span> -->
-        <button id="Blacklist-Button" aria-label="Add to blacklist">
-          <img id="blackBut" src="/assets/forbidden.png" alt="Button" width="30" height="30"/>
-        </button>
+        <form action="10-rounds/blacklist" method="post">
+          <button id="Blacklist-Button" aria-label="Add to blacklist" type="submit">
+            <img id="blackBut" src="/assets/forbidden.png" alt="Button" width="30" height="30"/>
+          </button>
+        </form>
       </section>
 
       <section>

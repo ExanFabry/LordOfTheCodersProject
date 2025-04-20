@@ -14,7 +14,8 @@ declare module 'express-session' {
     export interface SessionData {
         user?: User,
         message: string | any,
-        rounds: number
+        rounds: number,
+        blackListReason: string
     }
 }
 
