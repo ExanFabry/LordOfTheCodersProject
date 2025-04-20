@@ -18,40 +18,34 @@ export interface SessionData {
 }
 
 export interface Quotes{
-    // docs: {
-        _id:  ObjectId;
-        dialog:  string;
-        movie:  string;
-        character:  string;
-        id:  string;
-    // }[];
+    _id:  ObjectId;
+    dialog:  string;
+    movie:  string;
+    character:  string;
+    id:  string;
 }
 
 export interface Movies{
-    docs: {
-        _id: ObjectId;
-        name: string;
-        runtimeInMinutes: number;
-        budgetInMillions: number;
-        boxOfficeRevenueInMillions: number;
-        academyAwardNominations: number;
-        academyAwardWins: number;
-        rottenTomatoesScore: number;
-    }[];
+    _id: ObjectId;
+    name: string;
+    runtimeInMinutes: number;
+    budgetInMillions: number;
+    boxOfficeRevenueInMillions: number;
+    academyAwardNominations: number;
+    academyAwardWins: number;
+    rottenTomatoesScore: number;
 }
 
 export interface Characters{
-    docs: {
-        _id: ObjectId;
-        name: string;
-        wikiUrl: string;
-        race: string;
-        birth: string;
-        gender: string;
-        death: string;
-        hair: string;
-        height: string;
-        realm: string;
-        spouse: string;
-    }[];
+    _id: ObjectId;
+    name: string;
+    wikiUrl: string;
+    race: string;
+    birth: string;
+    gender: string;
+    death: string;
+    hair: string;
+    height: string;
+    realm: string;
+    spouse: string;
 }
