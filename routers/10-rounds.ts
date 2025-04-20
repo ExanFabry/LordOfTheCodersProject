@@ -36,9 +36,6 @@ export default function tenRoundsRouter() {
             for(let i: number = 0; i < 10; i++){
                 //Gebruik een lus tot het getal uniek is
                 let checkUniqueNumber = true;
-                if (quotesArray.length < 10) {
-                    throw new Error("Not enough quotes available to generate 10 unique numbers.");
-                }
                 let randomNumber: number;
                 do{
                     //Genereer een random nummer
