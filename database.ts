@@ -83,4 +83,6 @@ export async function addToFavorite(quote: number, req: Request){
         user: req.session.user
     };
     const result = await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
+    let readResult: FavoriteQuote[] = await (client.db("Les").collection("favoriteQuotes").find<FavoriteQuote>({})).toArray();
+    console.log(readResult);
 }
