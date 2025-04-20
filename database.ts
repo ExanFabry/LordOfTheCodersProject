@@ -1,8 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { MongoClient } from "mongodb";
-import { User } from "./interfaces/types";
+import { FavoriteQuote, User } from "./interfaces/types";
 import bcrypt from "bcrypt";
+import { quotes } from "./routers/10-rounds";
+import 'express-session';
+import { Request } from "express";
 
 export const MONGODB_URI = process.env.MONGODB_URI ?? "mongodb://localhost:27017";
 
@@ -69,4 +72,15 @@ export async function login(email: string, password: string) {
     } else {
         throw new Error("User not found");
     }
+}
+
+export async function addToFavorite(quote: number, req: Request){
+    await client.connect();
+ 
+    let favoriteQuote: FavoriteQuote = { 
+        quote:quotes[quote].dialog, 
+        character: quotes[quote].character,
+        user: req.session.user
+    };
+    const result = await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
 }
