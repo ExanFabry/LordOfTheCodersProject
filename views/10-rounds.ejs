@@ -30,9 +30,11 @@
     <%- include("partials/header") %>
     <main>
       <section class="quote-container">
-        <button id="Favorite-Button" aria-label="Add to favorites">
-          <img id="favBut" src="/assets/heart.png" alt="Button" width="35" height="35" />
-        </button>
+        <form action="/favorite" method="post">
+          <button id="Favorite-Button" aria-label="Add to favorites" type="submit">
+            <img id="favBut" src="/assets/heart.png" alt="Button" width="35" height="35" />
+          </button>
+        </form>
 
         <span class="score"><%= rounds %>/10</span>
         <section id="quote-section">

@@ -1,12 +1,7 @@
-/*
-    Maak een array met booleans met 10 booleans die allemaal op false staan.
-    Een form zorgt ervoor dat het juiste element naar true gaat.
-    /10-rounds geeft de array mee.
-    In ejs staat er een if structuur dat checkt of een element false of true is.
-*/
 import express from "express";
 import { Quotes } from "../interfaces/types";
 import { getQuotes, quotesArray } from "../api";
+import { addToFavorite } from "../database";
 
 export let quotes: Quotes[] = [];
 export let questionAnsweredArrayOfTypeBoolean: boolean[] = [
@@ -79,6 +74,16 @@ export default function tenRoundsRouter() {
             res.redirect("/login");
         }
     });
+
+    router.post('/favorite', (req, res) => {
+        if (req.session.user) {
+            addToFavorite(req.session.rounds as number, req);
+            res.redirect("/10-rounds");
+        }
+        else {
+            res.redirect("/login");
+        }
+      });
 
     //Verhoogt de rounds variabele.
     router.post('/increase-rounds', (req, res) => {

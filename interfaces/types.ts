@@ -18,11 +18,11 @@ export interface SessionData {
 }
 
 export interface Quotes{
-    _id:  ObjectId;
-    dialog:  string;
-    movie:  string;
-    character:  string;
-    id:  string;
+    _id: ObjectId;
+    dialog: string;
+    movie: string;
+    character: string;
+    id: string;
 }
 
 export interface Movies{
@@ -48,4 +48,10 @@ export interface Characters{
     height: string;
     realm: string;
     spouse: string;
+}
+
+export interface FavoriteQuote{
+    quote: string;
+    character: string;
+    user: User | undefined;
 }
