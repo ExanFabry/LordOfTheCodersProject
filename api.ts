@@ -26,7 +26,6 @@ export async function getMovies(){
         }
     });
     movieArray = await response.json();
-    console.log(movieArray);
 }
 
 export async function getCharacters(){
@@ -35,6 +34,6 @@ export async function getCharacters(){
             Authorization: `Bearer ${process.env.API_KEY}`
         }
     });
-    characterArray = await response.json();
-    console.log(characterArray);
+    const jsonData = await response.json();
+    characterArray = jsonData.docs;
 }
