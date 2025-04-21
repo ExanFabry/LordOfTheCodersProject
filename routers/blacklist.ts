@@ -13,8 +13,8 @@ export default function blacklistRouter() {
     router.post("/", async (req,res)=>{
         let quote: string = req.body.quote;
         let answer: string = req.body.answer;
-        let result: string = req.body.result;
-        
+        let reason: string = req.body.reason;
+        let blacklistArray: string[] = req.body.blacklistArray;
         
     })
     return router;
