@@ -56,7 +56,7 @@ export interface FavoriteQuote{
     user: User | undefined;
 }
 
-export interface BlacklistQuote{
+export interface Answer{
     quote: string;
     character: string;
     user: User | undefined;

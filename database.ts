@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { MongoClient } from "mongodb";
-import { BlacklistQuote, FavoriteQuote, User } from "./interfaces/types";
+import { Answer, FavoriteQuote, User } from "./interfaces/types";
 import bcrypt from "bcrypt";
 import { quotes } from "./routers/10-rounds";
 import 'express-session';
@@ -90,13 +90,13 @@ export async function addToFavorite(quote: number, req: Request){
 export async function addToBlacklist(quote: number, reason: string, req: Request){
     await client.connect();
     
-    let blacklistQuote: BlacklistQuote = { 
+    let blacklistQuote: Answer = { 
         quote:quotes[quote].dialog, 
         character: quotes[quote].character,
         user: req.session.user,
-        reason: "Vind deze quote niet leuk"
+        reason: reason
     };
     const result = await client.db("Les").collection("blacklistQuotes").insertOne(blacklistQuote);
-    let readResult: BlacklistQuote[] = await (client.db("Les").collection("blacklistQuotes").find<BlacklistQuote>({})).toArray();
+    let readResult: Answer[] = await (client.db("Les").collection("blacklistQuotes").find<Answer>({})).toArray();
     console.log(readResult);
 }
