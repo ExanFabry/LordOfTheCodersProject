@@ -9,18 +9,18 @@ import { login } from "./database";
 import { flashMiddleware } from "./flashMiddleware";
 
 //Import routers
-import loginRouter from "./routers/loginRouter";
-import registerRouter from "./routers/registerRouter";
-import homeRouter from "./routers/homeRouter";
-import tenRoundsRouter from "./routers/10-rounds";
-import blacklistRouter from "./routers/blacklist";
-import favoriteRouter from "./routers/favorite";
-import highscoreRouter from "./routers/highscore";
-import mistakesRouter from "./routers/mistakes";
-import resultRouter from "./routers/result";
-import suddendeathRouter from "./routers/suddendeath";
-import indexRouter from "./routers/index";
-import invalidPageRouter from "./routers/404";
+import loginRouter from "./routes/loginRouter";
+import registerRouter from "./routes/registerRouter";
+import homeRouter from "./routes/homeRouter";
+import tenRoundsRouter from "./routes/10-rounds";
+import blacklistRouter from "./routes/blacklist";
+import favoriteRouter from "./routes/favorite";
+import highscoreRouter from "./routes/highscore";
+import mistakesRouter from "./routes/mistakes";
+import resultRouter from "./routes/result";
+import suddendeathRouter from "./routes/suddendeath";
+import indexRouter from "./routes/index";
+import invalidPageRouter from "./routes/404";
 
 const app = express();
 

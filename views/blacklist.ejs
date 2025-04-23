@@ -31,6 +31,24 @@
       <section class="kader">
         <h2 class="title">Blacklist</h2>
         <section class="list">
+          <section class="form">
+            <form action="/blacklist/add" method="POST" class="blacklist-form">
+              <div class="form-group">
+                <label for="quote">Quote</label>
+                <input type="text" id="quote" name="quote" required class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label for="answer">Antwoord</label>
+                <input type="text" id="answer" name="answer" required class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label for="reason">Reden</label>
+                <input type="text" id="reason" name="reason" required class="form-control"/>
+              </div>
+              <button type="submit" class="btn btn-primary mt-2">Toevoegen aan blacklist</button>
+            </form>
+          </section>
+          
           <article class="listkader">
             <h2>Quote (Q)</h2>
             <h2>Answer (A)</h2>
