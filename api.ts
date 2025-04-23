@@ -1,13 +1,13 @@
 import { Characters, Movies, Quotes } from "./interfaces/types";
 
 const quotesApi: string = "https://the-one-api.dev/v2/quote";
-let quotesArray: Quotes;
+export let quotesArray: Quotes[];
 
 const movieApi: string = "https://the-one-api.dev/v2/movie";
-let movieArray: Movies;
+export let movieArray: Movies[];
 
 const characterApi: string = "https://the-one-api.dev/v2/character";
-let characterArray: Characters;
+export let characterArray: Characters[];
 
 export async function getQuotes(){
     const response = await fetch(quotesApi, {
@@ -15,7 +15,8 @@ export async function getQuotes(){
             Authorization: `Bearer ${process.env.API_KEY}`
         }
     });
-    quotesArray = await response.json();
+    const jsonData = await response.json();
+    quotesArray = jsonData.docs;
 }
 
 export async function getMovies(){
@@ -25,7 +26,6 @@ export async function getMovies(){
         }
     });
     movieArray = await response.json();
-    console.log(movieArray);
 }
 
 export async function getCharacters(){
@@ -34,6 +34,6 @@ export async function getCharacters(){
             Authorization: `Bearer ${process.env.API_KEY}`
         }
     });
-    characterArray = await response.json();
-    console.log(characterArray);
+    const jsonData = await response.json();
+    characterArray = jsonData.docs;
 }
