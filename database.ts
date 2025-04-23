@@ -1,9 +1,9 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { MongoClient } from "mongodb";
-import { Answer, FavoriteQuote, User } from "./interfaces/types";
+import { Answer, FavoriteQuote, User} from "./interfaces/types";
 import bcrypt from "bcrypt";
-import { quotes } from "./routers/10-rounds";
+import { quotes } from "./routes/10-rounds";
 import 'express-session';
 import { Request } from "express";
 
@@ -87,16 +87,21 @@ export async function addToFavorite(quote: number, req: Request){
     console.log(readResult);
 }
 
-export async function addToBlacklist(quote: number, reason: string, req: Request){
+export async function addToBlacklist(quoteIndex: number, reason: string, req: Request){
     await client.connect();
-    
+
+    const quotes = req.session.quotes;
+    if (!quotes || !quotes[quoteIndex]) {
+        throw new Error("Quote niet gevonden in sessie.");
+    }
+
     let blacklistQuote: Answer = { 
-        quote:quotes[quote].dialog, 
-        character: quotes[quote].character,
+        quote: quotes[quoteIndex].dialog, 
+        character: quotes[quoteIndex].character,
         user: req.session.user,
         reason: reason
     };
     const result = await client.db("Les").collection("blacklistQuotes").insertOne(blacklistQuote);
-    let readResult: Answer[] = await (client.db("Les").collection("blacklistQuotes").find<Answer>({})).toArray();
+    let readResult: Answer[] = await client.db("Les").collection("blacklistQuotes").find<Answer>({}).toArray();
     console.log(readResult);
 }

@@ -1,4 +1,10 @@
 import express from "express";
+
+declare module "express-session" {
+    interface SessionData {
+        quotes?: Quotes[];
+    }
+}
 import { Characters, Quotes } from "../interfaces/types";
 import { characterArray, getCharacters, getQuotes, quotesArray } from "../api";
 import { addToBlacklist, addToFavorite } from "../database";
@@ -26,6 +32,7 @@ export default function tenRoundsRouter() {
     router.get("/", async (req, res) => {
         let randomNumbers: number[] = [];
         let randomCharacters: number[] = [];
+        
         try{
             await getQuotes();
             await getCharacters();
@@ -62,7 +69,7 @@ export default function tenRoundsRouter() {
         for(let i: number = 0; i < 10; i++){
             quotes.push(quotesArray[randomNumbers[i]]);
         }
-
+        req.session.quotes = quotes;
         //Geef de quotes mee
         if (req.session.user) {
             if (!req.session.rounds) {
