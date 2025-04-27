@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
+  preventDefault();
     const popup = document.getElementById("popup");
     const closePopup = document.getElementById("close-popup");
     const popupActionButton = document.getElementById("popup-action-button");

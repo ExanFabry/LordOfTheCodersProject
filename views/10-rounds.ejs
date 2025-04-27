@@ -67,6 +67,7 @@
             <img src="\assets\people.png" alt="people" width="35" height="35" />
           </h3>
           <% for( let index = 0; index < characterOptions.length; index++ ) { %>
+            <% console.log(characterOptions[index].name) %>
             <button id="karakter-button"><%= characterOptions[index].name %></button>
           <% } %>
           <!-- <button id="karakter-button">Gandalf</button>
