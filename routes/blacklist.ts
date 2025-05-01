@@ -2,6 +2,8 @@ import express from "express";
 import { addToBlacklist, client } from "../database";
 import { ObjectId } from "mongodb";
 import { quotes } from "./10-rounds";
+import { characterArray, getCharacters } from "../api";
+import { get } from "http";
 
 export default function blacklistRouter() {
     const router = express.Router();
@@ -18,10 +20,13 @@ export default function blacklistRouter() {
             .collection("blacklistQuotes")
             .find({ user: req.session.user })
             .toArray();
+        await getCharacters();
 
+               
         res.render("blacklist", {
             user: req.session.user,
-            blacklistArray: blacklistArray
+            blacklistArray: blacklistArray,
+            characterArray: characterArray
         });
     });
 

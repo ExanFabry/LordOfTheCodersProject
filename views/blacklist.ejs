@@ -38,10 +38,13 @@
             <h2>Answer (A)</h2>
             <h2>Reden (R)</h2>
           </article>
-         <% for (let i = 0; i < blacklistArray.length; i++) {
           
+         <% for (let i = 0; i < blacklistArray.length; i++) {
+           console.log(blacklistArray.length);
+            console.log(characterArray.length);
+            
             const quote = blacklistArray[i].quote;
-            const answer = blacklistArray[i].character;
+            const answer = characterArray[i].name;
             const reason = blacklistArray[i].reason;
           %>
           <article class="listkader">

@@ -31,14 +31,28 @@
       <section class="kader">
         <h2 class="title">Favorites</h2>
         <section class="list">
+          <% for (let i = 0; i < favoriteArray.length; i++) {
+            console.log(favoriteArray.length);
+            console.log(characterArray.length);
+            console.log(movieArray.length);
+            const quote = favoriteArray[i].quote;
+            const answer = characterArray[i].name;
+            const movie = movieArray[i].name;
+          %>
           <article class="listkader">
-            <h3>"My Precious"</h3>
-            <h3>Smeagle - Fellowship of the ring</h3>
+            <h4>"<%= quote %>"</h4>
+            <h4> <%= answer %> - <%= movie %></h4>
+            
           </article>
+          <%  }  %>
+          <% if (favoriteArray.length === 0) { %>
           <article class="listkader">
-            <h3>"My friends, you bow to no one"</h3>
-            <h3>Aragorn - Return of the king</h3>
+            <h4>Er zijn momenteel geen quotes in de favoritelist</h4>
           </article>
+          <%  
+          
+         } %>
+        
         </section>
       </section>
     </main>

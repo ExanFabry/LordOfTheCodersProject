@@ -1,11 +1,12 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { MongoClient } from "mongodb";
-import { Answer, FavoriteQuote, User} from "./interfaces/types";
+import { Answer, FavoriteQuote, User } from "./interfaces/types";
 import bcrypt from "bcrypt";
 import { quotes } from "./routes/10-rounds";
 import 'express-session';
 import { Request } from "express";
+import { characterArray, movieArray } from "./api";
 
 export const MONGODB_URI = process.env.MONGODB_URI ?? "mongodb://localhost:27017";
 
@@ -13,14 +14,14 @@ export const client = new MongoClient(MONGODB_URI);
 
 export const userCollection = client.db("login-express").collection<User>("users");
 
-const saltRounds : number = 10;
+const saltRounds: number = 10;
 
 async function createInitialUser() {
     if (await userCollection.countDocuments() > 0) {
         return;
     }
-    let email : string | undefined = process.env.ADMIN_EMAIL;
-    let password : string | undefined = process.env.ADMIN_PASSWORD;
+    let email: string | undefined = process.env.ADMIN_EMAIL;
+    let password: string | undefined = process.env.ADMIN_PASSWORD;
     if (email === undefined || password === undefined) {
         throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD must be set in environment");
     }
@@ -62,7 +63,7 @@ export async function login(email: string, password: string) {
     if (email === "" || password === "") {
         throw new Error("Email and password required");
     }
-    let user : User | null = await userCollection.findOne<User>({email: email});
+    let user: User | null = await userCollection.findOne<User>({ email: email });
     if (user) {
         if (await bcrypt.compare(password, user.password!)) {
             return user;
@@ -74,12 +75,13 @@ export async function login(email: string, password: string) {
     }
 }
 
-export async function addToFavorite(quote: number, req: Request){
+export async function addToFavorite(quote: number, req: Request) {
     await client.connect();
- 
-    let favoriteQuote: FavoriteQuote = { 
-        quote:quotes[quote].dialog, 
-        character: quotes[quote].character,
+
+    let favoriteQuote: FavoriteQuote = {
+        quote: quotes[quote].dialog,
+        character: characterArray[quote].name,
+        movie: movieArray[quote].name,
         user: req.session.user
     };
     const result = await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
@@ -87,7 +89,7 @@ export async function addToFavorite(quote: number, req: Request){
     console.log(readResult);
 }
 
-export async function addToBlacklist(quoteIndex: number, reason: string, req: Request){
+export async function addToBlacklist(quoteIndex: number, reason: string, req: Request) {
     await client.connect();
 
     const quotes = req.session.quotes;
@@ -95,9 +97,9 @@ export async function addToBlacklist(quoteIndex: number, reason: string, req: Re
         throw new Error("Quote niet gevonden in sessie.");
     }
 
-    let blacklistQuote: Answer = { 
-        quote: quotes[quoteIndex].dialog, 
-        character: quotes[quoteIndex].character,
+    let blacklistQuote: Answer = {
+        quote: quotes[quoteIndex].dialog,
+        character: characterArray[quoteIndex].name,
         user: req.session.user,
         reason: reason
     };
