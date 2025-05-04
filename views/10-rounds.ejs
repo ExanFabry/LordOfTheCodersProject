@@ -78,9 +78,12 @@
           <h3>
             <img src="\assets\clapperboard.png" alt="clapperboard" width="35" height="35"/>
           </h3>
-          <button id="film-button">The Fellowship of the Ring</button>
+          <% for( let index = 0; index < movieOptions.length; index++ ) { %>
+            <button id="karakter-button"><%= movieOptions[index].name %></button>
+          <% } %>
+          <!-- <button id="film-button">The Fellowship of the Ring</button>
           <button id="film-button">The Two Towers</button>
-          <button id="film-button">The Return of the King</button>
+          <button id="film-button">The Return of the King</button> -->
         </article>
       </section>
 
