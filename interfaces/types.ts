@@ -26,16 +26,14 @@ export interface Quotes{
 }
 
 export interface Movies{
-    docs: {
-        _id: ObjectId;
-        name: string;
-        runtimeInMinutes: number;
-        budgetInMillions: number;
-        boxOfficeRevenueInMillions: number;
-        academyAwardNominations: number;
-        academyAwardWins: number;
-        rottenTomatoesScore: number;
-    }[];
+    _id: ObjectId;
+    name: string;
+    runtimeInMinutes: number;
+    budgetInMillions: number;
+    boxOfficeRevenueInMillions: number;
+    academyAwardNominations: number;
+    academyAwardWins: number;
+    rottenTomatoesScore: number;
 }
 
 export interface Characters{

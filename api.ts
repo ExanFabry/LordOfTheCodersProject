@@ -25,7 +25,8 @@ export async function getMovies(){
             Authorization: `Bearer ${process.env.API_KEY}`
         }
     });
-    movieArray = await response.json();
+    const jsonData = await response.json();
+    movieArray = jsonData.docs;
 }
 
 export async function getCharacters(){
