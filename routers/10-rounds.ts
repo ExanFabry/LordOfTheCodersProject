@@ -37,14 +37,16 @@ export default function tenRoundsRouter() {
 
     router.get("/", async (req, res) => {
         let randomNumbers: number[] = [];
-        try{
-            await getQuotes();
-            await getCharacters();
-            await getMovies();
-        }
-        catch(error){
-            console.log(error);
-            // return res.status(500).send("Failed");
+        if(+(req.session.rounds as number) === 0){
+            try{
+                await getQuotes();
+                await getCharacters();
+                await getMovies();
+            }
+            catch(error){
+                console.log(error);
+                // return res.status(500).send("Failed");
+            }
         }
 
         //Character array die meegegeven gaat worden in de route
@@ -67,12 +69,12 @@ export default function tenRoundsRouter() {
                 //Steek de getallen in een array
                 randomNumbers.push(randomNumber);
             }
-        } 
+        }
 
         //Haal 10 quotes uit de api
         for(let i: number = 0; i < 10; i++){
             quotes.push(quotesArray[randomNumbers[i]]);
-        }
+        } 
 
         //Geef de quotes mee
         if (req.session.user) {
@@ -90,7 +92,6 @@ export default function tenRoundsRouter() {
             if(movies.length === 0){
                 generateMovies(req);
             }
-            console.log(movies.length);
             
             let charactersForRound: {
                 id: ObjectId,        
@@ -98,7 +99,7 @@ export default function tenRoundsRouter() {
                 correctCharacter: boolean
             }[] = [];
             
-            for(let i: number = 1; i < 4; i++){
+            for(let i: number = 0; i < 3; i++){
                 charactersForRound.push(characters[((req.session.rounds - 1) * 3) + i]);
                 // console.log(characters[((req.session.rounds - 1) * 3) + i]);
             }
@@ -108,7 +109,7 @@ export default function tenRoundsRouter() {
                 name: string | undefined,
                 correctMovie: boolean
             }[] = [];
-            for(let i: number = 1; i < 4; i++){
+            for(let i: number = 0; i < 3; i++){
                 const movieIndex = ((req.session.rounds - 1) * 3) + i;
                 if (movieIndex < movies.length) {
                     moviesForRound.push(movies[movieIndex]);
@@ -122,9 +123,11 @@ export default function tenRoundsRouter() {
             // for(let i: number = 0; i < movies.length; i++){
             //     console.log(movies[i].name);
             // }
+
+
             res.render('10-rounds', { 
                 rounds: req.session.rounds,
-                quotes: quotes,
+                quotes: quotes[req.session.rounds - 1], 
                 questionAnsweredBoolean: questionAnsweredArrayOfTypeBoolean,
                 characterOptions: charactersForRound,
                 movieOptions: moviesForRound
@@ -246,6 +249,7 @@ async function generateCharacters(req: express.Request){
                 randomCharacters.pop();
             }            
         }
+
         for(let j: number = 0; j < 1; j++){
             let rightCharacterFind: Characters | undefined = characterArray.find(element => new ObjectId(element._id).equals(new ObjectId(quotes[i].character)));
             let rightCharacter: {
@@ -270,7 +274,9 @@ async function generateCharacters(req: express.Request){
             const j = Math.floor(Math.random() * (i + 1));
             [charactersPerRound[k], charactersPerRound[j]] = [charactersPerRound[j], charactersPerRound[k]];
         }
-        characters.push(...charactersPerRound)
+        // characters.push(...charactersPerRound)
+
+        characters.push(...charactersPerRound.filter(m => m !== undefined));
     } 
 }
 
@@ -306,6 +312,7 @@ async function generateMovies(req: express.Request){
                     name: movieArray[randomMovies[j]].name,
                     correctMovie: false
                 }
+
                 moviesPerRound.push(newMovie);
             }
             else{
@@ -337,7 +344,11 @@ async function generateMovies(req: express.Request){
             const j = Math.floor(Math.random() * (i + 1));
             [moviesPerRound[k], moviesPerRound[j]] = [moviesPerRound[j], moviesPerRound[k]];
         }
-        movies.push(...moviesPerRound)
+
+
+
+        movies.push(...moviesPerRound.filter(m => m !== undefined));
+
     }
 }
 

@@ -40,7 +40,8 @@
         <span class="score"><%= rounds %>/10</span>
         <section id="quote-section">
           <blockquote>
-            <%= quotes[rounds].dialog %>
+            <%= //quotes[rounds].dialog %>
+            <%= quotes.dialog %>
           </blockquote>
           <p>Wie zei het? In welke film?</p>
         </section>
@@ -52,7 +53,7 @@
           <div id="popup" class="popup hidden">
             <div class="popup-content">
               <span id="close-popup" class="close-button">&times;</span>
-              <%= quotes[rounds].dialog %>
+              <%= quotes.dialog %>
               <h2>Waarom wil je dit blacklisten?</h2>
               <input type="text" name="blackListReason" id="">
               <button id="popup-action-button">Blacklist!</button>
@@ -67,8 +68,9 @@
             <img src="\assets\people.png" alt="people" width="35" height="35" />
           </h3>
           <% for( let index = 0; index < characterOptions.length; index++ ) { %>
-            <% console.log(characterOptions[index].name) %>
             <button id="karakter-button"><%= characterOptions[index].name %></button>
+            <% console.log(rounds) %>
+            <% console.log(characterOptions[index].name) %>
           <% } %>
           <!-- <button id="karakter-button">Gandalf</button>
           <button id="karakter-button">Galadriel</button>
