@@ -32,7 +32,7 @@ app.set("view engine", "ejs");
 app.set("port", process.env.PORT || 3000);
 app.use(session);
 app.use(flashMiddleware);
-
+dotenv.config();
 //Routers
 app.use("/login", loginRouter());
 app.use("/register", registerRouter());
