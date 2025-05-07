@@ -1,6 +1,6 @@
 import { MONGODB_URI } from "./database";
 import session, { MemoryStore } from "express-session";
-import { User } from "./interfaces/types";
+import { Characters, Movies, User } from "./interfaces/types";
 import mongoDbSession from "connect-mongodb-session";
 const MongoDBStore = mongoDbSession(session);
 
@@ -15,7 +15,8 @@ declare module 'express-session' {
         user?: User,
         message: string | any,
         rounds: number,
-        blackListReason: string
+        blackListReason: string,
+        value: Characters | Movies
     }
 }
 
