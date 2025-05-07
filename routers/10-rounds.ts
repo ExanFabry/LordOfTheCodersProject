@@ -32,6 +32,8 @@ export let questionAnsweredArrayOfTypeBoolean: boolean[] = [
     false,
     false
 ]
+let rightOrWrongCharacter: boolean[] = [];
+
 export default function tenRoundsRouter() {
     const router = express.Router();
 
@@ -182,6 +184,39 @@ export default function tenRoundsRouter() {
               res.redirect("/login");
           }
         });
+
+        router.post('/add-character-points', (req, res) => {
+            if (req.session.user) { 
+                const characterValue = JSON.parse(req.body.characterOption);
+                console.log(characterValue);
+                if(characterValue.correctCharacter === false){
+                    if(req.session.rounds !== undefined){
+                        if(rightOrWrongCharacter.length < req.session.rounds){
+                            rightOrWrongCharacter.push(false);
+                        }
+                        else{
+                            rightOrWrongCharacter[req.session.rounds] = false;
+                        }
+                    }
+                    console.log(rightOrWrongCharacter);
+                }
+                else if(characterValue.correctCharacter === true){
+                    if(req.session.rounds !== undefined){
+                        if(rightOrWrongCharacter.length < req.session.rounds){
+                            rightOrWrongCharacter.push(true);
+                        }
+                        else{
+                            rightOrWrongCharacter[req.session.rounds] = true;
+                        }
+                    }
+                    console.log(rightOrWrongCharacter);
+                }
+                res.redirect("/10-rounds");
+            }
+            else {
+                res.redirect("/login");
+            }
+          });
         
         //Submit question
         router.post('/complete-question', (req, res) => {
