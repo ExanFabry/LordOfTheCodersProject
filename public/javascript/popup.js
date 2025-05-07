@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const popup = document.getElementById("popup");
     const closePopup = document.getElementById("close-popup");
     const popupActionButton = document.getElementById("popup-action-button");
+    const blacklistButton = document.getElementById("Blacklist-Button");
   
     // Functie om de popup te tonen
     function showPopup() {
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
       hidePopup();
     });
   
-    // Voorbeeld: Toon de popup na 2 seconden
-    setTimeout(showPopup, 2000);
+    blacklistButton.addEventListener("click", () => {
+      showPopup();
+    });
   });

@@ -25,7 +25,7 @@ export interface Quotes {
     id: string;
 }
 
-export interface Movies {
+export interface Movies{
     _id: ObjectId;
     name: string;
     runtimeInMinutes: number;
