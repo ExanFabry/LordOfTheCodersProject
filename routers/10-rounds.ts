@@ -32,8 +32,8 @@ export let questionAnsweredArrayOfTypeBoolean: boolean[] = [
     false,
     false
 ]
-let rightOrWrongCharacter: boolean[] = [];
-let rightOrWrongMovie: boolean[] = [];
+export let rightOrWrongCharacter: boolean[] = [];
+export let rightOrWrongMovie: boolean[] = [];
 
 export default function tenRoundsRouter() {
     const router = express.Router();
