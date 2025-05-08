@@ -29,7 +29,7 @@ app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set("view engine", "ejs");
-app.set("port", process.env.PORT || 4000);
+app.set("port", process.env.PORT || 3000);
 app.use(session);
 app.use(flashMiddleware);
 

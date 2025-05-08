@@ -76,7 +76,9 @@
             <img src="\assets\clapperboard.png" alt="clapperboard" width="35" height="35"/>
           </h3>
           <% for( let index = 0; index < movieOptions.length; index++ ) { %>
-            <button id="karakter-button"><%= movieOptions[index].name %></button>
+            <form action="/10-rounds/add-movie-points" method="post">
+              <button type="submit" id="karakter-button" name="movieOption" value="<%= JSON.stringify(movieOptions[index]) %>"><%= movieOptions[index].name %></button>
+            </form>
           <% } %>
         </article>
       </section>
