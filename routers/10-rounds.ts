@@ -1,7 +1,7 @@
 import express from "express";
 import { Characters, Movies, Quotes } from "../interfaces/types";
 import { characterArray, movieArray, getCharacters, getQuotes, quotesArray, getMovies } from "../api";
-import { addToBlacklist, addToFavorite } from "../database";
+import { addToBlacklist, addToFavorite, client } from "../database";
 import { ObjectId } from "mongodb";
 import session from "express-session";
 import { Session } from "inspector/promises";
@@ -60,6 +60,8 @@ export default function tenRoundsRouter() {
         //Genereer 10 unieke random cijfers
         //Check eerst of de quotes array leeg is
         if(quotes.length === 0 || quotes.length === 1){
+            await client.connect();
+            const resultBlackList = await client.db("Les").collection("blacklistQuotes").find<Quotes>({}).toArray();
             //Gebruik een for lus om 10 cijfers te genereren
             for(let i: number = 0; i < 10; i++){
                 //Gebruik een lus tot het getal uniek is
@@ -67,7 +69,7 @@ export default function tenRoundsRouter() {
                 do{
                     //Genereer een random nummer
                     randomNumber = Math.floor(Math.random() * quotesArray.length);
-                }while(randomNumbers.includes(randomNumber) && quotesArray[randomNumber].character !== undefined && quotesArray[randomNumber].movie !== undefined)
+                }while(randomNumbers.includes(randomNumber) && quotesArray[randomNumber].character !== undefined && quotesArray[randomNumber].movie !== undefined && resultBlackList.includes(quotesArray[randomNumber]))
                 //Steek de getallen in een array
                 randomNumbers.push(randomNumber);
             }
