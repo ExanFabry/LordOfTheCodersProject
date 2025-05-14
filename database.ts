@@ -3,7 +3,7 @@ dotenv.config();
 import { MongoClient } from "mongodb";
 import { Answer, FavoriteQuote, User } from "./interfaces/types";
 import bcrypt from "bcrypt";
-import { quotes } from "./routes/10-rounds";
+import { quotes } from "./routers/10-rounds";
 import 'express-session';
 import { Request } from "express";
 import { characterArray, movieArray } from "./api";

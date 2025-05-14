@@ -9,18 +9,18 @@ import { login } from "./database";
 import { flashMiddleware } from "./flashMiddleware";
 
 //Import routers
-import loginRouter from "./routes/loginRouter";
-import registerRouter from "./routes/registerRouter";
-import homeRouter from "./routes/homeRouter";
-import tenRoundsRouter from "./routes/10-rounds";
-import blacklistRouter from "./routes/blacklist";
-import favoriteRouter from "./routes/favorite";
-import highscoreRouter from "./routes/highscore";
-import mistakesRouter from "./routes/mistakes";
-import resultRouter from "./routes/result";
-import suddendeathRouter from "./routes/suddendeath";
-import indexRouter from "./routes/index";
-import invalidPageRouter from "./routes/404";
+import loginRouter from "./routers/loginRouter";
+import registerRouter from "./routers/registerRouter";
+import homeRouter from "./routers/homeRouter";
+import tenRoundsRouter from "./routers/10-rounds";
+import blacklistRouter from "./routers/blacklist";
+import favoriteRouter from "./routers/favorite";
+import highscoreRouter from "./routers/highscore";
+import mistakesRouter from "./routers/mistakes";
+import resultRouter from "./routers/result";
+import suddendeathRouter from "./routers/suddendeath";
+import indexRouter from "./routers/index";
+import invalidPageRouter from "./routers/404";
 
 const app = express();
 
@@ -47,33 +47,33 @@ app.use("/suddendeath", suddendeathRouter());
 app.use("/404", invalidPageRouter());
 app.use("/", indexRouter());
 
-app.post("/login", async(req, res) => {
-  const email : string = req.body.email;
-  const password : string = req.body.password;
+app.post("/login", async (req, res) => {
+  const email: string = req.body.email;
+  const password: string = req.body.password;
   try {
-      let user : User = await login(email, password);
-      delete user.password; 
-      req.session.user = user;
-      res.redirect("/")
-  } catch (e : any) {
-      res.redirect("/login");
+    let user: User = await login(email, password);
+    delete user.password;
+    req.session.user = user;
+    res.redirect("/")
+  } catch (e: any) {
+    res.redirect("/login");
   }
 });
-app.get("/logout", async(req, res) => {
+app.get("/logout", async (req, res) => {
   req.session.destroy(() => {
-      res.redirect("/login");
+    res.redirect("/login");
   });
 });
 app.use((req, res) => {
   res.redirect("/404");
 });
 
-app.listen(app.get("port"), async() => {
+app.listen(app.get("port"), async () => {
   try {
-      await connect();
-      console.log("Server started on http://localhost:" + app.get('port'));
+    await connect();
+    console.log("Server started on http://localhost:" + app.get('port'));
   } catch (e) {
-      console.log(e);
-      process.exit(1); 
+    console.log(e);
+    process.exit(1);
   }
 });
