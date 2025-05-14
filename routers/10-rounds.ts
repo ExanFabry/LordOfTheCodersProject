@@ -1,13 +1,7 @@
 import express from "express";
-
-declare module "express-session" {
-    interface SessionData {
-        quotes?: Quotes[];
-    }
-}
-import { Characters, Quotes } from "../interfaces/types";
-import { characterArray, getCharacters, getQuotes, quotesArray } from "../api";
-import { addToBlacklist, addToFavorite } from "../database";
+import { Characters, Movies, Quotes } from "../interfaces/types";
+import { characterArray, movieArray, getCharacters, getQuotes, quotesArray, getMovies } from "../api";
+import { addToBlacklist, addToFavorite, client } from "../database";
 import { ObjectId } from "mongodb";
 
 export let quotes: Quotes[] = [];
@@ -26,20 +20,23 @@ export let questionAnsweredArrayOfTypeBoolean: boolean[] = [
     false,
     false
 ]
+export let rightOrWrongCharacter: boolean[] = [];
+export let rightOrWrongMovie: boolean[] = [];
+
 export default function tenRoundsRouter() {
     const router = express.Router();
 
     router.get("/", async (req, res) => {
         let randomNumbers: number[] = [];
-        let randomCharacters: number[] = [];
-        
-        try{
-            await getQuotes();
-            await getCharacters();
-        }
-        catch(error){
-            console.log(error);
-            // return res.status(500).send("Failed");
+        if(+(req.session.rounds as number) <= 2 || +(req.session.rounds as number) === undefined){ 
+            try{
+                await getQuotes();
+                await getCharacters();
+                await getMovies();
+            }
+            catch(error){
+                console.log(error);
+            }
         }
 
         //Character array die meegegeven gaat worden in de route
@@ -50,7 +47,9 @@ export default function tenRoundsRouter() {
         
         //Genereer 10 unieke random cijfers
         //Check eerst of de quotes array leeg is
-        if(quotes.length === 0){
+        if(quotes.length === 0 || quotes.length === 1){
+            await client.connect();
+            const resultBlackList = await client.db("Les").collection("blacklistQuotes").find<Quotes>({}).toArray();
             //Gebruik een for lus om 10 cijfers te genereren
             for(let i: number = 0; i < 10; i++){
                 //Gebruik een lus tot het getal uniek is
@@ -58,7 +57,7 @@ export default function tenRoundsRouter() {
                 do{
                     //Genereer een random nummer
                     randomNumber = Math.floor(Math.random() * quotesArray.length);
-                }while(randomNumbers.includes(randomNumber))
+                }while(randomNumbers.includes(randomNumber) && quotesArray[randomNumber].character !== undefined && quotesArray[randomNumber].movie !== undefined && resultBlackList.includes(quotesArray[randomNumber]))
                 //Steek de getallen in een array
                 randomNumbers.push(randomNumber);
             }
@@ -78,45 +77,36 @@ export default function tenRoundsRouter() {
             if(req.session.rounds > 10){
                 req.session.rounds = 1;
             }
-            console.log(req.session.rounds);
-        
-            //Genereer 2 unieke random cijfers
-            //Check eerst of de character array leeg is
-            if(characterOptions.length === 0){
-                //Gebruik een for lus om 2 cijfers te genereren
-                for(let i: number = 0; i < 2; i++){
-                    //Gebruik een lus tot het getal uniek is
-                    let randomNumber: number;
-                    do{
-                        //Genereer een random nummer
-                        randomNumber = Math.floor(Math.random() * quotesArray.length);
-                    }while(randomNumbers.includes(randomNumber))
-                    //Steek de getallen in een array
-                    randomCharacters.push(randomNumber);
-                    console.log(randomNumber);
+            
+            if(characters.length === 0){
+                generateCharacters(req);
+            }
+
+            if(movies.length === 0){
+                generateMovies(req);
+            }
+            
+            let charactersForRound: {
+                id: ObjectId,        
+                name: string | undefined,
+                correctCharacter: boolean
+            }[] = [];
+            
+            for(let i: number = 0; i < 3; i++){
+                charactersForRound.push(characters[((req.session.rounds - 1) * 3) + i]);
+            }
+            
+            let moviesForRound: {
+                id: ObjectId,        
+                name: string | undefined,
+                correctMovie: boolean
+            }[] = [];
+            for(let i: number = 0; i < 3; i++){
+                const movieIndex = ((req.session.rounds - 1) * 3) + i;
+                if (movieIndex < movies.length) {
+                    moviesForRound.push(movies[movieIndex]);
                 }
-                
-                for(let i: number = 0; i < 2; i++){
-                    let newCharacter: {
-                        id: ObjectId,
-                        name: string
-                    } = {
-                        id: characterArray[randomCharacters[i]]._id,
-                        name: characterArray[randomCharacters[i]].name
-                    }
-                    characterOptions.push(newCharacter);
-                }
-                let rightCharacterFind: Characters | undefined = characterArray.find(element => new ObjectId(element._id).equals(new ObjectId(quotes[req.session.rounds as number].character)));
-                console.log(quotes[req.session.rounds as number].character);
-                let rightCharacter: {
-                    id: ObjectId,
-                    name: string | undefined
-                } = {
-                    id: new ObjectId(quotes[req.session.rounds as number].character),
-                    name: rightCharacterFind?.name
-                }
-                characterOptions.push(rightCharacter);
-            }     
+            }
             res.render('10-rounds', { 
                 rounds: req.session.rounds,
                 quotes: quotes,
@@ -164,10 +154,10 @@ export default function tenRoundsRouter() {
         else {
             res.redirect("/login");
         }
-      });
+    });
 
       //Verlaagt de rounds variabele.
-      router.post('/decrease-rounds', (req, res) => {
+    router.post('/decrease-rounds', (req, res) => {
           if (req.session.user) {
               if (!req.session.rounds) {
                   req.session.rounds = 1;
@@ -183,6 +173,69 @@ export default function tenRoundsRouter() {
           else {
               res.redirect("/login");
           }
+    });
+
+    router.post('/add-character-points', (req, res) => {
+        if (req.session.user) { 
+            const characterValue = JSON.parse(req.body.characterOption);
+            if(characterValue.correctCharacter === false){
+                if(req.session.rounds !== undefined){
+                    if(rightOrWrongCharacter.length < req.session.rounds){
+                        rightOrWrongCharacter.push(false);
+                    }
+                    else{
+                        rightOrWrongCharacter[req.session.rounds] = false;
+                    }
+                }
+            }
+            else if(characterValue.correctCharacter === true){
+                if(req.session.rounds !== undefined){
+                    if(rightOrWrongCharacter.length < req.session.rounds){
+                        rightOrWrongCharacter.push(true);
+                    }
+                    else{
+                        rightOrWrongCharacter[req.session.rounds] = true;
+                    }
+                }
+            }
+            res.redirect("/10-rounds");
+        }
+        else {
+            res.redirect("/login");
+        }
+    });
+
+        router.post('/add-movie-points', (req, res) => {
+            if (req.session.user) { 
+                const movieValue = JSON.parse(req.body.movieOption);
+                console.log(movieValue);
+                if(movieValue.correctMovie === false){
+                    if(req.session.rounds !== undefined){
+                        if(rightOrWrongMovie.length < req.session.rounds){
+                            rightOrWrongMovie.push(false);
+                        }
+                        else{
+                            rightOrWrongMovie[req.session.rounds] = false;
+                        }
+                    }
+                    console.log(rightOrWrongMovie);
+                }
+                else if(movieValue.correctMovie === true){
+                    if(req.session.rounds !== undefined){
+                        if(rightOrWrongMovie.length < req.session.rounds){
+                            rightOrWrongMovie.push(true);
+                        }
+                        else{
+                            rightOrWrongMovie[req.session.rounds] = true;
+                        }
+                    }
+                    console.log(rightOrWrongMovie);
+                }
+                res.redirect("/10-rounds");
+            }
+            else {
+                res.redirect("/login");
+            }
         });
         
         //Submit question
@@ -197,6 +250,6 @@ export default function tenRoundsRouter() {
             else {
                 res.redirect("/login");
             }
-          });
+        });
     return router;
 }

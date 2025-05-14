@@ -17,7 +17,6 @@ export async function getQuotes(){
     });
     const jsonData = await response.json();
     quotesArray = jsonData.docs;
-    console.log("test")
     console.log(response.statusText);
 
 }
