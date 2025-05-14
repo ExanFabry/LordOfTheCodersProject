@@ -8,7 +8,7 @@ import { Session } from "inspector/promises";
 
 export let quotes: Quotes[] = [];
 let characters: {
-    id: ObjectId,        
+    id: ObjectId,
     name: string | undefined,
     correctCharacter: boolean
  }[] = [];
@@ -34,6 +34,9 @@ export let questionAnsweredArrayOfTypeBoolean: boolean[] = [
 ]
 export let rightOrWrongCharacter: boolean[] = [];
 export let rightOrWrongMovie: boolean[] = [];
+
+let characterColorChange: number | undefined;
+let movieColorChange: number | undefined;
 
 export default function tenRoundsRouter() {
     const router = express.Router();
@@ -123,7 +126,9 @@ export default function tenRoundsRouter() {
                 quotes: quotes[req.session.rounds - 1], 
                 questionAnsweredBoolean: questionAnsweredArrayOfTypeBoolean,
                 characterOptions: charactersForRound,
-                movieOptions: moviesForRound
+                movieOptions: moviesForRound,
+                characterColorChange: characterColorChange,
+                movieColorChange: movieColorChange
             });
         } 
         else {
@@ -154,6 +159,8 @@ export default function tenRoundsRouter() {
     //Verhoogt de rounds variabele.
     router.post('/increase-rounds', (req, res) => {
         if (req.session.user) {
+            characterColorChange = undefined;
+            movieColorChange = undefined;
             if (!req.session.rounds) {
                 req.session.rounds = 1;
             }
@@ -190,6 +197,8 @@ export default function tenRoundsRouter() {
     router.post('/add-character-points', (req, res) => {
         if (req.session.user) { 
             const characterValue = JSON.parse(req.body.characterOption);
+            const characterIndex = +(req.body.characterIndex as number);
+            characterColorChange = characterIndex;
             if(characterValue.correctCharacter === false){
                 if(req.session.rounds !== undefined){
                     if(rightOrWrongCharacter.length < req.session.rounds){
@@ -220,6 +229,8 @@ export default function tenRoundsRouter() {
         router.post('/add-movie-points', (req, res) => {
             if (req.session.user) { 
                 const movieValue = JSON.parse(req.body.movieOption);
+                const movieIndex = +(req.body.movieIndex as number);
+                movieColorChange = movieIndex;
                 console.log(movieValue);
                 if(movieValue.correctMovie === false){
                     if(req.session.rounds !== undefined){
