@@ -3,8 +3,20 @@ import { Characters, Movies, Quotes } from "../interfaces/types";
 import { characterArray, movieArray, getCharacters, getQuotes, quotesArray, getMovies } from "../api";
 import { addToBlacklist, addToFavorite, client } from "../database";
 import { ObjectId } from "mongodb";
+import session from "express-session";
+import { Session } from "inspector/promises";
 
 export let quotes: Quotes[] = [];
+let characters: {
+    id: ObjectId,        
+    name: string | undefined,
+    correctCharacter: boolean
+ }[] = [];
+ let movies: {
+     id: ObjectId,        
+     name: string | undefined,
+     correctMovie: boolean
+  }[] = [];
 export function emptyQuotes(){
     quotes = [];
 }
@@ -61,14 +73,13 @@ export default function tenRoundsRouter() {
                 //Steek de getallen in een array
                 randomNumbers.push(randomNumber);
             }
-        } 
+        }
 
         //Haal 10 quotes uit de api
-        console.log(randomNumbers);
         for(let i: number = 0; i < 10; i++){
             quotes.push(quotesArray[randomNumbers[i]]);
-        }
-        req.session.quotes = quotes;
+        } 
+
         //Geef de quotes mee
         if (req.session.user) {
             if (!req.session.rounds) {
@@ -109,9 +120,10 @@ export default function tenRoundsRouter() {
             }
             res.render('10-rounds', { 
                 rounds: req.session.rounds,
-                quotes: quotes,
+                quotes: quotes[req.session.rounds - 1], 
                 questionAnsweredBoolean: questionAnsweredArrayOfTypeBoolean,
-                characterOptions: characterOptions
+                characterOptions: charactersForRound,
+                movieOptions: moviesForRound
             });
         } 
         else {
@@ -252,4 +264,139 @@ export default function tenRoundsRouter() {
             }
         });
     return router;
-};
+}
+
+async function generateCharacters(req: express.Request){
+    for(let i: number = 0; i < 10; i++){
+        let randomCharacters: number[] = [];
+        let charactersPerRound: {
+            id: ObjectId,
+            name: string | undefined,
+            correctCharacter: boolean
+        }[] = [];
+
+        for(let j: number = 0; j < 1; j++){
+            let rightCharacterFind: Characters | undefined = characterArray.find(element => new ObjectId(element._id).equals(new ObjectId(quotes[i].character)));
+            let rightCharacter: {
+                id: ObjectId,
+                name: string | undefined,
+                correctCharacter: boolean
+            } = {
+                id: new ObjectId(quotes[req.session.rounds as number].character),
+                name: rightCharacterFind?.name,
+                correctCharacter: true
+            }
+            if(rightCharacter !== undefined){
+                charactersPerRound.push(rightCharacter);
+            }
+            else{
+                j--;
+            }            
+        }
+        for(let j: number = 0; j < 2; j++){
+            let randomNumber = Math.floor(Math.random() * characterArray.length);
+            if(!randomCharacters.includes(randomNumber)){
+                randomCharacters.push(randomNumber);
+            }
+            if(randomCharacters !== undefined && characterArray[randomCharacters[j]]._id, characterArray[randomCharacters[j]].name && !charactersPerRound.some(character => character.name === characterArray[randomNumber].name)){
+                let newCharacter: {
+                    id: ObjectId,
+                    name: string | undefined,
+                    correctCharacter: boolean
+                } = {
+                    id: characterArray[randomCharacters[j]]._id,
+                    name: characterArray[randomCharacters[j]].name,
+                    correctCharacter: false
+                }
+                if(newCharacter !== undefined){
+                    charactersPerRound.push(newCharacter);
+                }
+            }
+            else{
+                j--;
+                randomCharacters.pop();
+            }            
+        }
+        
+        //Fisher-Yates shuffle
+        for (let k = charactersPerRound.length - 1; k > 0; k--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [charactersPerRound[k], charactersPerRound[j]] = [charactersPerRound[j], charactersPerRound[k]];
+        }
+        characters.push(...charactersPerRound.filter(m => m !== undefined));
+    } 
+}
+
+async function generateMovies(req: express.Request){
+    for(let i: number = 0; i < 10; i++){
+        let randomMovies: number[] = [];
+        let moviesPerRound: {
+            id: ObjectId,
+            name: string | undefined,
+            correctMovie: boolean
+        }[] = [];
+        
+        for(let j: number = 0; j < 1; j++){
+            let rightMovieFind: Movies | undefined = movieArray.find(element => new ObjectId(element._id).equals(new ObjectId(quotes[i].movie)));
+            if(rightMovieFind !== undefined){
+                let rightMovie: {
+                    id: ObjectId,
+                    name: string | undefined,
+                    correctMovie: boolean
+                } = {
+                    id: new ObjectId(quotes[req.session.rounds as number].movie),
+                    name: rightMovieFind?.name,
+                    correctMovie: true
+                }
+                moviesPerRound.push(rightMovie);
+            }
+            else{
+                j--;
+            }
+        }
+        // Genereer 2 unieke random cijfers
+        while(randomMovies.length < 2){
+            let randomNumber = Math.floor(Math.random() * movieArray.length);
+            if(!randomMovies.includes(randomNumber) && movieArray[randomNumber] && !moviesPerRound.some(movie => movie.name === movieArray[randomNumber].name)){
+                randomMovies.push(randomNumber);
+            }
+        }
+
+        for(let j: number = 0; j < 2; j++){
+            if(
+                randomMovies[j] !== undefined &&
+                movieArray[randomMovies[j]]._id !== undefined && 
+                movieArray[randomMovies[j]].name !== undefined
+            ){
+                let newMovie: {
+                    id: ObjectId,
+                    name: string | undefined,
+                    correctMovie: boolean
+                } = {
+                    id: movieArray[randomMovies[j]]._id,
+                    name: movieArray[randomMovies[j]].name,
+                    correctMovie: false
+                }
+
+                moviesPerRound.push(newMovie);
+            }
+            else{
+                j--;
+                randomMovies.pop();
+            }
+        }
+        
+        //Fisher-Yates shuffle
+        for (let k = moviesPerRound.length - 1; k > 0; k--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [moviesPerRound[k], moviesPerRound[j]] = [moviesPerRound[j], moviesPerRound[k]];
+        }
+        movies.push(...moviesPerRound.filter(m => m !== undefined));
+
+    }
+}
+
+export function clearArrays(){
+    characters = [];
+    movies = [];
+}
