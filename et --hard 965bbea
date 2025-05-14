@@ -1,0 +1,206 @@
+[33mcommit 462ecef0db6645e2464e980b6430f10e304c9734[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mGregBranch[m[33m, [m[1;31morigin/GregBranch[m[33m)[m
+Merge: 965bbea d873706
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Wed May 7 13:49:14 2025 +0000
+
+    Merge branch 'exanbranch' into GregBranch
+
+[33mcommit d87370695e7ed1e2ff6a995d308a5f3f98bca8c6[m[33m ([m[1;31morigin/exanbranch[m[33m, [m[1;32mexanbranch[m[33m)[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Wed May 7 13:46:34 2025 +0000
+
+    Putting booleans in an array (characters) for the score and fixing popup problem.
+
+[33mcommit 965bbeac8f7567e6d3fff55167c1aebcc8d709d9[m
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Tue May 6 19:25:04 2025 +0000
+
+    .env toegevoegd test
+
+[33mcommit fb305703b222eefb83f7a91915184094f2e63bda[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Tue May 6 18:35:10 2025 +0000
+
+    Fix duplicate movies and characters. Remove unnecessary comments.
+
+[33mcommit f26fa4f307854eb196f445b354237b6348eb4ede[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Mon May 5 23:41:22 2025 +0000
+
+    Undefined bug solved
+
+[33mcommit fd646b9ad6dfa0970bc2c656cf27cd1452d4a89b[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Sun May 4 21:22:42 2025 +0000
+
+    Show movies. Still need to fix problem with api.
+
+[33mcommit 20ea74bb4afc91b8dc69ad5cce44c2dba51b5034[m
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Thu May 1 10:21:26 2025 +0000
+
+    blacklist/favorite add functie gemaakt
+
+[33mcommit 74bb9a820b9686f20432a2e73cc7c510f020160c[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Sun Apr 27 21:38:18 2025 +0000
+
+    CharacterOptions in 10-rounds
+
+[33mcommit 3a6c815d6fd1e1360b6e0b6f8caed24f6c98ecc2[m
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Wed Apr 23 15:28:58 2025 +0000
+
+    blacklist verder verwertk
+
+[33mcommit 2b5830c20ee36b59e2ffd1cc97945399306f97c4[m
+Merge: ec3e107 01bdc5b
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Wed Apr 23 13:51:21 2025 +0000
+
+    Merge branch 'exanbranch' into GregBranch
+
+[33mcommit ec3e1078fdeefce05a2cb9005112447635e06708[m
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Wed Apr 23 13:45:15 2025 +0000
+
+    blacklist aangepast en routers => routes
+
+[33mcommit 01bdc5b22c8d4b9f974f9654d03bef5dc6367a97[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Mon Apr 21 20:54:05 2025 +0000
+
+    Generate three characters per question and user can give a reason why they blacklist a quote.
+
+[33mcommit a0567f1953053b5c292a013b82526a695a63f867[m
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Mon Apr 21 13:43:41 2025 +0000
+
+    blacklistarray gemaakt
+
+[33mcommit ab35c6262932794c4b3d230ed4bc674dbbde7556[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Sun Apr 20 17:54:47 2025 +0000
+
+    Blacklist button works
+
+[33mcommit fbaf0df1d5fde76f053fbe12b7ac51258f72608a[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Sun Apr 20 17:16:12 2025 +0000
+
+    Favorite button works
+
+[33mcommit 572eb4fda9b209267e496e6f5fe7f6e406e6d42a[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Sun Apr 20 16:53:17 2025 +0000
+
+    addToFavoriteFunction
+
+[33mcommit 938338942aabba70df215201c6ba9d0a3a4cce54[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Thu Apr 17 22:15:49 2025 +0000
+
+    Button function 10 rounds
+
+[33mcommit 2b6a2e88b396eccd179d14eb022ae7495a053dd3[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Thu Apr 17 20:41:30 2025 +0000
+
+    Removing console.log
+
+[33mcommit 46c2a206192b887fbec7c026775d8ac183f5c688[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Thu Apr 17 20:41:08 2025 +0000
+
+    Bug fix req.session.rounds and removing console.log();
+
+[33mcommit 6b9b2d48d8d83d64f20fbed2b6d567b785acdd20[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Wed Apr 16 20:48:11 2025 +0000
+
+    Add quotes
+
+[33mcommit a6bd2f11f90431e57e1131cd2d330221537f73f2[m
+Author: Gregoire Intwali <s158900@ap.be>
+Date:   Wed Apr 16 16:10:40 2025 +0000
+
+    begin blacklist
+
+[33mcommit fc062cd33b6e463043991f82290a8eab4ced67e6[m
+Merge: 044959b e7c653c
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Mon Apr 14 21:17:20 2025 +0000
+
+    Merge branch 'exanbranch'
+
+[33mcommit e7c653cee19ea557f83b454caebb125856e96977[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Mon Apr 14 21:16:54 2025 +0000
+
+    10-rounds page changes
+
+[33mcommit 044959be1707cbd5471f14477f70f72ead585b9b[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Sun Apr 13 18:44:51 2025 +0000
+
+    Fetch api
+
+[33mcommit a1c46394384c16852fab5f5884df4e9117756e34[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Fri Apr 11 21:46:05 2025 +0000
+
+    Fix gitignore
+
+[33mcommit e6f984147e793094770e4c4623af741338cca429[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Fri Apr 11 21:14:42 2025 +0000
+
+    Fix error
+
+[33mcommit d46e19a4c10df40ecd891f75e4b3254280277e13[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Fri Apr 11 21:11:54 2025 +0000
+
+    Hide modules
+
+[33mcommit 3b0445ecceb661530de861baf186f5793bbc9260[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Fri Apr 11 15:51:50 2025 +0000
+
+    Implement register
+
+[33mcommit ae1b2063e7cdccb47c213798fac6b8f07c3e7bce[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Thu Apr 10 22:04:15 2025 +0000
+
+    Must login first
+
+[33mcommit 36eaff94bbc9c2dad7a72f498d76f286c2553c96[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Thu Apr 10 20:58:57 2025 +0000
+
+    Send user to 404 when user uses wrong route.
+
+[33mcommit bd15f6f3798246839dda92cae2886bca09ec2a5c[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Thu Apr 10 19:09:18 2025 +0000
+
+    Show error message.
+
+[33mcommit 0905aa4ff9f80e1dd1dccefe92fd027029782f54[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Wed Apr 9 16:52:33 2025 +0000
+
+    Add gitignore
+
+[33mcommit bb2c06531d376bb77e965b272e3fc4dfbae2cdac[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Wed Apr 9 16:26:28 2025 +0000
+
+    Login
+
+[33mcommit 7e9346f826a9655fe5671844999ea79603e27032[m
+Author: Fabry Exan (s148939) <exan.fabry@student.ap.be>
+Date:   Fri Apr 4 12:11:16 2025 +0000
+
+    Clone repository
