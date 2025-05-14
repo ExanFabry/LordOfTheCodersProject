@@ -252,4 +252,4 @@ export default function tenRoundsRouter() {
             }
         });
     return router;
-}
+};
