@@ -6,6 +6,7 @@ import bcrypt from "bcrypt";
 import { quotes } from "./routers/10-rounds";
 import 'express-session';
 import { Request } from "express";
+import { ObjectId } from "mongodb";
 import { characterArray, movieArray } from "./api";
 
 export const MONGODB_URI = process.env.MONGODB_URI ?? "mongodb://localhost:27017";
@@ -92,18 +93,23 @@ export async function addToFavorite(quote: number, req: Request) {
 export async function addToBlacklist(quoteIndex: number, reason: string, req: Request) {
     await client.connect();
 
-    const quotes = req.session.quotes;
-    if (!quotes || !quotes[quoteIndex]) {
-        throw new Error("Quote niet gevonden in sessie.");
-    }
+    // const quotes = req.session.quotes;
+    // if (!quotes || !quotes[quoteIndex]) {
+    //     throw new Error("Quote niet gevonden in sessie.");
+    // }
 
     let blacklistQuote: Answer = {
         quote: quotes[quoteIndex].dialog,
         character: characterArray[quoteIndex].name,
         user: req.session.user,
         reason: reason
+        
     };
     const result = await client.db("Les").collection("blacklistQuotes").insertOne(blacklistQuote);
     let readResult: Answer[] = await client.db("Les").collection("blacklistQuotes").find<Answer>({}).toArray();
     console.log(readResult);
+}
+export async function deleteFromBlacklist(id: string) {
+    await client.connect();
+    await client.db("Les").collection("blacklistQuotes").deleteOne({ _id: new ObjectId(id) });
 }

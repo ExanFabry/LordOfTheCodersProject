@@ -50,7 +50,14 @@
           <article class="listkader">
             <h4>Q: "<%= quote %>"</h4>
             <h4>A: <%= answer %></h4>
-            <h5>R: <%= reason %></h5>
+            <h5>R: <%= reason %>
+              <form action="/blacklist/edit/<%=id %>" method="POST" style="display:inline;">
+                <button type="submit" class="btn btn-primary">Edit</button>
+              </form>  <form action="/blacklist/delete/<%= blacklistArray[i]._id %>" method="POST" style="display:inline;">
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+              </h5>
+          
           </article>
           <%  }  %>
           <% if (blacklistArray.length === 0) { %>

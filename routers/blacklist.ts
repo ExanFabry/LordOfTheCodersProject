@@ -2,6 +2,7 @@ import express from "express";
 import { addToBlacklist, client } from "../database";
 import { ObjectId } from "mongodb";
 import { quotes } from "./10-rounds";
+import { deleteFromBlacklist } from "../database";
 import { characterArray, getCharacters } from "../api";
 import { get } from "http";
 
@@ -26,7 +27,8 @@ export default function blacklistRouter() {
         res.render("blacklist", {
             user: req.session.user,
             blacklistArray: blacklistArray,
-            characterArray: characterArray
+            characterArray: characterArray,
+            id: req.session.user
         });
     });
 
@@ -45,23 +47,20 @@ export default function blacklistRouter() {
 
         res.redirect("/blacklist");
     });
-
-    // POST: Verwijder quote uit database
-    router.post("/delete", async (req, res) => {
+    router.post("/delete/:id", async (req, res) => {
         if (!req.session.user) {
             return res.redirect("/login");
         }
 
-        const id = req.body.id;
-        if (id) {
-            await client.connect();
-            await client
-                .db("Les")
-                .collection("blacklistQuotes")
-                .deleteOne({ _id: new ObjectId(id), user: req.session.user });
-        }
+        const quoteId = req.params.id as string;
 
-        res.redirect("/blacklist");
+        if (ObjectId.isValid(quoteId)) {
+            await deleteFromBlacklist(quoteId);
+            res.redirect("/blacklist")
+        };
+        
+        
+    
     });
 
     return router;
