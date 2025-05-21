@@ -31,20 +31,18 @@
     <%- include("partials/header") %>
     <main>
       <section class="quote-container">
-        <form action="10-rounds/favorite" method="post">
+        <form action="10-rounds/favorite" method="post" class="d-flex justify-content-center">
           <button id="Favorite-Button" aria-label="Add to favorites" type="submit">
             <img id="favBut" src="/assets/heart.png" alt="Button" width="35" height="35" />
           </button>
         </form>
 
-        <span class="score"><%= rounds %>/10</span>
+        <span class="d-flex justify-content-center align-items-center" class="score"><%= rounds %>/10</span>
         <section id="quote-section">
           <blockquote>
             <%= quotes.dialog %>
           </blockquote>
-          <p>Wie zei het? In welke film?</p>
         </section>
-        <!-- <span class="amount">14/20</span> -->
         <button id="Blacklist-Button" aria-label="Add to blacklist" type="submit">
           <img id="blackButton" src="/assets/forbidden.png" alt="Button" width="30" height="30"/>
         </button>
@@ -65,6 +63,7 @@
           <h3>
             <img src="\assets\people.png" alt="people" width="35" height="35" />
           </h3>
+          <p>Wie zei het?</p>
           <% for( let index = 0; index < characterOptions.length; index++ ) { %>
             <form action="/10-rounds/add-character-points" method="post">
               <input type="hidden" name="characterIndex" value="<%= index %>">
@@ -80,6 +79,7 @@
           <h3>
             <img src="\assets\clapperboard.png" alt="clapperboard" width="35" height="35"/>
           </h3>
+          <p>In welke film?</p>
           <% for( let index = 0; index < movieOptions.length; index++ ) { %>
             <form action="/10-rounds/add-movie-points" method="post">
               <input type="hidden" name="movieIndex" value="<%= index %>">
