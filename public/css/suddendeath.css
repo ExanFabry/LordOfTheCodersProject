@@ -105,7 +105,8 @@ main {
 
 .next-button {
   text-align: center;
-  width: 20%;
+  /* width: 20%; */
+  width: 100%;
   height: 30%;
   padding: 15px;
   background-color: rgba(166, 43, 15, 1);

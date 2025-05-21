@@ -13,7 +13,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/SuddenDeath.css" />
+    <link rel="stylesheet" href="css/suddendeath.css" />
     <script src="javascript/hamburger-menu.js" defer></script>
     <script src="javascript\suddendeath.js" defer></script>
     <link
@@ -40,10 +40,11 @@
           />
         </button>
         <section id="quote-section">
-          <span class="score">0/10</span>
+          <span class="score">Round <%= rounds %></span>
           <blockquote>
-            "Certainty of death. Small chance of success. What are we waiting
-            for?"
+            <!-- "Certainty of death. Small chance of success. What are we waiting
+            for?" -->
+            <%= quotes.dialog %>
           </blockquote>
           <p>Wie zei het? In welke film?</p>
         </section>
@@ -89,7 +90,9 @@
       </section>
 
       <section id="submit-section">
-        <button id="Submit-button" class="next-button">Submit</button>
+        <form action="/suddendeath/increase-rounds" method="POST">
+          <button id="Submit-button" class="next-button" type="submit">Submit</button>
+        </form>
       </section>
     </main>
     <%- include("partials/footer") %>
