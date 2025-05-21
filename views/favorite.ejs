@@ -31,28 +31,17 @@
       <section class="kader">
         <h2 class="title">Favorites</h2>
         <section class="list">
-          <% for (let i = 0; i < favoriteArray.length; i++) {
-            console.log(favoriteArray.length);
-            console.log(characterArray.length);
-            console.log(movieArray.length);
-            const quote = favoriteArray[i].quote;
-            const answer = characterArray[i].name;
-            const movie = movieArray[i].name;
-          %>
+          <% for (let i = 0; i < favoritesWithDetails.length; i++) { %>
           <article class="listkader">
-            <h4>"<%= quote %>"</h4>
-            <h4> <%= answer %> - <%= movie %></h4>
-            
+            <h4>"<%= favoritesWithDetails[i].quote %>"</h4>
+            <h4> <%= favoritesWithDetails[i].characterName %> - <%= favoritesWithDetails[i].movieName %></h4> 
           </article>
-          <%  }  %>
-          <% if (favoriteArray.length === 0) { %>
+          <% } %>
+          <% if (favoritesWithDetails.length === 0) { %>
           <article class="listkader">
             <h4>Er zijn momenteel geen quotes in de favoritelist</h4>
           </article>
-          <%  
-          
-         } %>
-        
+          <% } %>
         </section>
       </section>
     </main>
