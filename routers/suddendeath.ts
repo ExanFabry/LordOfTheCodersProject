@@ -1,9 +1,9 @@
 //Imports
 import express from "express";
-import { getQuotes, getCharacters, getMovies, quotesArray, characterArray } from "../api";
+import { getQuotes, getCharacters, getMovies, quotesArray, characterArray, movieArray } from "../api";
 // import { quotes } from "./10-rounds";
 import { client } from "../database";
-import { Quotes, Characters } from "../interfaces/types";
+import { Quotes, Characters, Movies } from "../interfaces/types";
 import { ObjectId } from "mongodb";
 
 export let quotesSuddenDeath: Quotes[] = [];
@@ -12,8 +12,14 @@ let characters: {
     name: string | undefined;
     correctCharacter: boolean;
 }[] = [];
+let movies: {
+    id: ObjectId;
+    name: string | undefined;
+    correctMovie: boolean;
+}[] = [];
 
 export let rightOrWrongCharacterSuddenDeath: boolean[] = [];
+export let rightOrWrongMovieSuddenDeath: boolean[] = [];
 
 let characterColorChange: number | undefined;
 let movieColorChange: number | undefined;
@@ -24,6 +30,7 @@ export default function suddendeathRouter() {
 
     router.get("/", async (req, res) => {
         characters = [];
+        movies = [];
         //Haalt de blacklist quotes op.
         const resultBlackList = await client.db("Les").collection("blacklistQuotes").find<Quotes>({}).toArray();
         //Ervoor zorgen dat de api niet teveel wordt aangeroepen.
@@ -59,8 +66,10 @@ export default function suddendeathRouter() {
             if (!req.session.rounds) {
                 req.session.rounds = 1;
             }
-            //Steekt de characters in de array
+            //Steekt de characters en movies in de array
             generateCharacters(req);
+            generateMovies(req);
+
             res.render("suddendeath", {
                 //Geeft de rondes mee
                 rounds: req.session.rounds,
@@ -68,7 +77,12 @@ export default function suddendeathRouter() {
                 quotes: randomQuote,
                 //Geeft characters mee
                 characterOptions: characters,
+                //Geeft films mee
+                movieOptions: movies,
+                //Welk character is geselecteerd
                 characterColorChange: characterColorChange,
+                //Welke film is geselecteerd
+                movieColorChange: movieColorChange
             });
         } else {
             res.redirect("/login");
@@ -90,36 +104,63 @@ export default function suddendeathRouter() {
         }
     });
     
-        router.post("/add-character-points", (req, res) => {
-            if (req.session.user) {
-                const characterValue = JSON.parse(req.body.characterOption);
-                const characterIndex = +(req.body.characterIndex as number);
-                characterColorChange = characterIndex;
-                if (characterValue.correctCharacter === false) {
-                    if (req.session.rounds !== undefined) {
-                        if (rightOrWrongCharacterSuddenDeath.length < req.session.rounds) {
-                            rightOrWrongCharacterSuddenDeath.push(false);
-                        } else {
-                            rightOrWrongCharacterSuddenDeath[req.session.rounds] = false;
-                        }
-                    }
-                } else if (characterValue.correctCharacter === true) {
-                    if (req.session.rounds !== undefined) {
-                        if (rightOrWrongCharacterSuddenDeath.length < req.session.rounds) {
-                            rightOrWrongCharacterSuddenDeath.push(true);
-                        } else { 
-                            rightOrWrongCharacterSuddenDeath[req.session.rounds] = true;
-                        }
+    router.post("/add-character-points", (req, res) => {
+        if (req.session.user) {
+            const characterValue = JSON.parse(req.body.characterOption);
+            const characterIndex = +(req.body.characterIndex as number);
+            characterColorChange = characterIndex;
+            if (characterValue.correctCharacter === false) {
+                if (req.session.rounds !== undefined) {
+                    if (rightOrWrongCharacterSuddenDeath.length < req.session.rounds) {
+                        rightOrWrongCharacterSuddenDeath.push(false);
+                    } else {
+                        rightOrWrongCharacterSuddenDeath[req.session.rounds] = false;
                     }
                 }
-                res.redirect("/suddendeath");
-            } else {
-                res.redirect("/login");
+            } else if (characterValue.correctCharacter === true) {
+                if (req.session.rounds !== undefined) {
+                    if (rightOrWrongCharacterSuddenDeath.length < req.session.rounds) {
+                        rightOrWrongCharacterSuddenDeath.push(true);
+                    } else { 
+                        rightOrWrongCharacterSuddenDeath[req.session.rounds] = true;
+                    }
+                }
             }
-        });
+            res.redirect("/suddendeath");
+        } else {
+            res.redirect("/login");
+        }
+    });
+    
+    router.post("/add-movie-points", (req, res) => {
+        if (req.session.user) {
+            const movieValue = JSON.parse(req.body.movieOption);
+            const movieIndex = +(req.body.movieIndex as number);
+            movieColorChange = movieIndex;
+            if (movieValue.correctMovie === false) {
+                if (req.session.rounds !== undefined) {
+                    if (rightOrWrongMovieSuddenDeath.length < req.session.rounds) {
+                        rightOrWrongMovieSuddenDeath.push(false);
+                    } else {
+                        rightOrWrongMovieSuddenDeath[req.session.rounds] = false;
+                    }
+                }
+            } else if (movieValue.correctMovie === true) {
+                if (req.session.rounds !== undefined) {
+                    if (rightOrWrongMovieSuddenDeath.length < req.session.rounds) {
+                        rightOrWrongMovieSuddenDeath.push(true);
+                    } else {
+                        rightOrWrongMovieSuddenDeath[req.session.rounds] = true;
+                    }
+                }
+            }
+            res.redirect("/suddendeath");
+        } else {
+            res.redirect("/login");
+        }
+    });
     return router;
 }
-
 
 async function generateCharacters(req: express.Request) {
     let randomCharacters: number[] = [];
@@ -179,4 +220,73 @@ async function generateCharacters(req: express.Request) {
     }
 
     characters.push(...charactersPerRound.filter((m) => m !== undefined));
+}
+async function generateMovies(req: express.Request) {
+    let randomMovies: number[] = [];
+    let moviesPerRound: {
+        id: ObjectId;
+        name: string | undefined;
+        correctMovie: boolean;
+    }[] = [];
+
+    // Voeg juiste film toe
+    let rightMovieFind: Movies | undefined = movieArray.find((element) =>
+        new ObjectId(element._id).equals(new ObjectId(quotesSuddenDeath[0].movie))
+    );
+    if (rightMovieFind !== undefined) {
+        let rightMovie: {
+            id: ObjectId;
+            name: string | undefined;
+            correctMovie: boolean;
+        } = {
+            id: new ObjectId(quotesSuddenDeath[0].movie),
+            name: rightMovieFind?.name,
+            correctMovie: true,
+        };
+        moviesPerRound.push(rightMovie);
+    }
+
+    // Genereer 2 unieke random cijfers
+    while (randomMovies.length < 2) {
+        let randomNumber = Math.floor(Math.random() * movieArray.length);
+        if (
+            !randomMovies.includes(randomNumber) &&
+            movieArray[randomNumber] &&
+            !moviesPerRound.some((movie) => movie.name === movieArray[randomNumber].name)
+        ) {
+            randomMovies.push(randomNumber);
+        }
+    }
+
+    // Voeg 2 foute films toe (met i i.p.v. j)
+    for (let i: number = 0; i < 2; i++) {
+        if (
+            randomMovies[i] !== undefined &&
+            movieArray[randomMovies[i]]._id !== undefined &&
+            movieArray[randomMovies[i]].name !== undefined
+        ) {
+            let newMovie: {
+                id: ObjectId;
+                name: string | undefined;
+                correctMovie: boolean;
+            } = {
+                id: movieArray[randomMovies[i]]._id,
+                name: movieArray[randomMovies[i]].name,
+                correctMovie: false,
+            };
+
+            moviesPerRound.push(newMovie);
+        } else {
+            i--;
+            randomMovies.pop();
+        }
+    }
+
+    // Fisher-Yates shuffle
+    for (let k = moviesPerRound.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [moviesPerRound[k], moviesPerRound[j]] = [moviesPerRound[j], moviesPerRound[k]];
+    }
+
+    movies.push(...moviesPerRound.filter((m) => m !== undefined));
 }
