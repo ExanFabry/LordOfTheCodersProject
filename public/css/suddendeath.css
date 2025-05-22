@@ -96,6 +96,10 @@ main {
   background-color: #241d0dcc;
 }
 
+#karakter p, #film p{
+  color: lightgrey;
+}
+
 #submit-section {
   display: flex;
   justify-content: center;

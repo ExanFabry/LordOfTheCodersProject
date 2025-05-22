@@ -46,7 +46,6 @@
             for?" -->
             <%= quotes.dialog %>
           </blockquote>
-          <p>Wie zei het? In welke film?</p>
         </section>
         <button id="Blacklist-Button" aria-label="Add to blacklist">
           <img
@@ -69,9 +68,20 @@
               height="35"
             />
           </h3>
-          <button id="karakter-button">Merry</button>
+          <p>Wie zei het?</p>
+          <!-- <button id="karakter-button">Merry</button>
           <button id="karakter-button">Gimli</button>
-          <button id="karakter-button">Legolas</button>
+          <button id="karakter-button">Legolas</button> -->
+          <% for( let index = 0; index < characterOptions.length; index++ ) { %>
+            <form action="/10-rounds/add-character-points" method="post">
+              <input type="hidden" name="characterIndex" value="<%= index %>">
+              <% if (characterColorChange === index) { %>
+                <button type="submit" id="karakter-button" name="characterOption" value="<%= JSON.stringify(characterOptions[index]) %>" style="background-color: #c3b07d"><%= characterOptions[index].name %></button> 
+              <% } else { %>
+                <button type="submit" id="karakter-button" name="characterOption" value="<%= JSON.stringify(characterOptions[index]) %>"><%= characterOptions[index].name %></button> 
+              <% } %>
+            </form>
+          <% } %>
         </article>
 
         <article id="film">
@@ -81,8 +91,9 @@
               alt="clapboard"
               width="35"
               height="35"
-            />
+            /> 
           </h3>
+          <p>In welke film?</p>
           <button id="film-button">The Fellowship of the Ring</button>
           <button id="film-button">The Two Towers</button>
           <button id="film-button">The Return of the King</button>
