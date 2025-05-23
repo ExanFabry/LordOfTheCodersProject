@@ -76,15 +76,14 @@ export async function login(email: string, password: string) {
 
 export async function addToFavorite(quote: number, req: Request){
     await client.connect();
- 
+    
     let favoriteQuote: FavoriteQuote = { 
         quote:quotes[quote].dialog, 
-        character: quotes[quote].character,
+        character: quotes[quote].character, 
         user: req.session.user
     };
     const result = await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
     let readResult: FavoriteQuote[] = await (client.db("Les").collection("favoriteQuotes").find<FavoriteQuote>({})).toArray();
-    console.log(readResult);
 }
 
 export async function addToBlacklist(quote: number, reason: string, req: Request){

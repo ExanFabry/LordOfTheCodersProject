@@ -2,11 +2,15 @@
 import express from "express";
 import { getQuotes, getCharacters, getMovies, quotesArray, characterArray, movieArray } from "../api";
 // import { quotes } from "./10-rounds";
-import { client } from "../database";
+import { client, addToBlacklist, addToFavorite } from "../database";
 import { Quotes, Characters, Movies } from "../interfaces/types";
 import { ObjectId } from "mongodb";
+import { addToQuotes } from "./10-rounds";
 
 export let quotesSuddenDeath: Quotes[] = [];
+// Genereer één unieke random quote die niet op de blacklist staat
+let randomQuote: Quotes | undefined;
+
 let characters: {
     id: ObjectId;
     name: string | undefined;
@@ -46,19 +50,21 @@ export default function suddendeathRouter() {
             }
         }
 
-        // Genereer één unieke random quote die niet op de blacklist staat
-        let randomQuote: Quotes | undefined;
-        do {
-            const randomIndex = Math.floor(Math.random() * quotesArray.length);
-            randomQuote = quotesArray[randomIndex];
-        } while (
-            !randomQuote ||
-            resultBlackList.some((q) => q._id === randomQuote!._id) ||
-            randomQuote.character === undefined ||
-            randomQuote.movie === undefined
-        );
-        quotesSuddenDeath = [];
-        quotesSuddenDeath.push(randomQuote);
+        if (randomQuote === undefined) {
+            do {
+                const randomIndex = Math.floor(Math.random() * quotesArray.length);
+                randomQuote = quotesArray[randomIndex];
+            } while (
+                !randomQuote ||
+                resultBlackList.some((q) => q._id === randomQuote!._id) || 
+                randomQuote.character === undefined ||
+                randomQuote.movie === undefined
+            );
+
+            quotesSuddenDeath = [];
+            quotesSuddenDeath.push(randomQuote);
+            addToQuotes(randomQuote);
+        }
 
         //Als de gebruiker is ingelogd.
         if (req.session.user) { 
@@ -89,6 +95,15 @@ export default function suddendeathRouter() {
         }
     });
     
+    router.post("/favorite", (req, res) => {
+        if (req.session.user) {
+            addToFavorite((req.session.rounds as number) - 1, req);
+            res.redirect("/suddendeath");
+        } else {
+            res.redirect("/login");
+        }
+    });
+    
     //Verhoogt de rounds variabele.
     router.post("/increase-rounds", (req, res) => {
         if (req.session.user) {
@@ -98,6 +113,7 @@ export default function suddendeathRouter() {
             else{
                 req.session.rounds += 1;
             }
+            randomQuote = undefined;
             res.redirect("/suddendeath");
         } else {
             res.redirect("/login");

@@ -135,7 +135,7 @@ export default function tenRoundsRouter() {
         } else {
             res.redirect("/login");
         }
-    });
+    }); 
 
     router.post("/blacklist", (req, res) => {
         if (req.session.user) {
@@ -256,7 +256,7 @@ export default function tenRoundsRouter() {
     return router;
 }
 
-async function generateCharacters(req: express.Request) {
+async function generateCharacters(req: express.Request): Promise<void> {
     for (let i: number = 0; i < 10; i++) {
         let randomCharacters: number[] = [];
         let charactersPerRound: {
@@ -320,7 +320,7 @@ async function generateCharacters(req: express.Request) {
     }
 }
 
-async function generateMovies(req: express.Request) {
+async function generateMovies(req: express.Request): Promise<void> {
     for (let i: number = 0; i < 10; i++) {
         let randomMovies: number[] = [];
         let moviesPerRound: {
@@ -386,7 +386,9 @@ async function generateMovies(req: express.Request) {
     }
 }
 
-export function clearArrays() {
+export function clearArrays(): void {
     characters = [];
     movies = [];
 }
+
+export const addToQuotes = (quote: Quotes) => quotes.push(quote);
