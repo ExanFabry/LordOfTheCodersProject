@@ -104,6 +104,16 @@ export default function suddendeathRouter() {
         }
     });
     
+    router.post("/blacklist", (req, res) => {
+        if (req.session.user) { 
+            addToBlacklist((req.session.rounds as number) - 1, req.body.blackListReason as string, req);
+            console.log(req.session.blackListReason as string);
+            res.redirect("/suddendeath");
+        } else {
+            res.redirect("/login"); 
+        }
+    });
+    
     //Verhoogt de rounds variabele.
     router.post("/increase-rounds", (req, res) => {
         if (req.session.user) {

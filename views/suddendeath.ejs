@@ -5,22 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sudden Death | Lord Of The Coders</title>
     <link rel="stylesheet" href="css/reset.css" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-      rel="nofollow"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="nofollow" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/suddendeath.css" />
     <script src="javascript/hamburger-menu.js" defer></script>
     <script src="javascript\suddendeath.js" defer></script>
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="/assets/lord-of-the-coders-logo.png"
-    />
+    <script src="javascript/popup.js"></script>
+    <link rel="icon" type="image/x-icon" href="/assets/lord-of-the-coders-logo.png"/>
     <audio autoplay loop>
       <!-- https://archive.org/details/TheLordOfTheRings_OST -->
       <source src="/assets/theshire.mp3" type="audio/mpeg" />
@@ -41,14 +32,8 @@
             <%= quotes.dialog %>
           </blockquote>
         </section>
-        <button id="Blacklist-Button" aria-label="Add to blacklist">
-          <img
-            id="blackBut"
-            src="\assets\white_forbidden.png"
-            alt="Button"
-            width="35"
-            height="35"
-          />
+        <button id="Blacklist-Button" aria-label="Add to blacklist" type="submit">
+          <img id="blackButton" src="/assets/forbidden.png" alt="Button" width="30" height="30"/>
         </button>
       </section>
 
@@ -108,3 +93,15 @@
       </section>
     </main>
     <%- include("partials/footer") %>
+    
+        <form action="suddendeath/blacklist" method="post">
+          <div id="popup" class="popup hidden">
+            <div class="popup-content">
+              <span id="close-popup" class="close-button">&times;</span>
+              <%= quotes.dialog %>
+              <h2>Waarom wil je dit blacklisten?</h2>
+              <input type="text" name="blackListReason" id="">
+              <button id="popup-action-button">Blacklist!</button>
+            </div>
+          </div>
+        </form>
