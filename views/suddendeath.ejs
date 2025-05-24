@@ -93,15 +93,14 @@
       </section>
     </main>
     <%- include("partials/footer") %>
-    
-        <form action="suddendeath/blacklist" method="post">
-          <div id="popup" class="popup hidden">
-            <div class="popup-content">
-              <span id="close-popup" class="close-button">&times;</span>
-              <%= quotes.dialog %>
-              <h2>Waarom wil je dit blacklisten?</h2>
-              <input type="text" name="blackListReason" id="">
-              <button id="popup-action-button">Blacklist!</button>
-            </div>
-          </div>
-        </form>
+    <form action="suddendeath/blacklist" method="post">
+      <div id="popup" class="popup hidden">
+        <div class="popup-content">
+          <span id="close-popup" class="close-button">&times;</span>
+          <%= quotes.dialog %>
+          <h2>Waarom wil je dit blacklisten?</h2>
+          <input type="text" name="blackListReason" id="">
+          <button id="popup-action-button">Blacklist!</button>
+        </div>
+      </div>
+    </form>

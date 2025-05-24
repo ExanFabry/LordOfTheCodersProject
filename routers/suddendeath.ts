@@ -32,9 +32,7 @@ let movieColorChange: number | undefined;
 export default function suddendeathRouter() {
     const router = express.Router();
 
-    router.get("/", async (req, res) => {
-        characters = [];
-        movies = [];
+    router.get("/", async (req, res) => {        
         //Haalt de blacklist quotes op.
         const resultBlackList = await client.db("Les").collection("blacklistQuotes").find<Quotes>({}).toArray();
         //Ervoor zorgen dat de api niet teveel wordt aangeroepen.
@@ -73,8 +71,10 @@ export default function suddendeathRouter() {
                 req.session.rounds = 1;
             }
             //Steekt de characters en movies in de array
-            generateCharacters(req);
-            generateMovies(req);
+            if(characters.length === 0 && movies.length === 0){
+                generateCharacters(req);
+                generateMovies(req);
+            }
 
             res.render("suddendeath", {
                 //Geeft de rondes mee
@@ -116,15 +116,22 @@ export default function suddendeathRouter() {
     
     //Verhoogt de rounds variabele.
     router.post("/increase-rounds", (req, res) => {
+        characters = [];
+        movies = [];
+        characterColorChange = undefined;
+        movieColorChange = undefined;
         if (req.session.user) {
             if (!req.session.rounds) {
                 req.session.rounds = 1;
-            }
+            } 
             else{
                 req.session.rounds += 1;
             }
             randomQuote = undefined;
-            res.redirect("/suddendeath");
+            if(rightOrWrongCharacterSuddenDeath[rightOrWrongCharacterSuddenDeath.length - 1] === false || rightOrWrongMovieSuddenDeath[rightOrWrongMovieSuddenDeath.length - 1] === false || rightOrWrongCharacterSuddenDeath.length < req.session.rounds || rightOrWrongMovieSuddenDeath.length < req.session.rounds){
+                res.redirect("/result");
+            }
+            res.redirect("/suddendeath")
         } else {
             res.redirect("/login");
         }
