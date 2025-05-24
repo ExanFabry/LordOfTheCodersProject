@@ -10,6 +10,8 @@ import { addToQuotes } from "./10-rounds";
 export let quotesSuddenDeath: Quotes[] = [];
 // Genereer één unieke random quote die niet op de blacklist staat
 let randomQuote: Quotes | undefined;
+export let totalRounds: string;
+export let finishedSuddenDeath: boolean;
 
 let characters: {
     id: ObjectId;
@@ -72,9 +74,10 @@ export default function suddendeathRouter() {
             }
             //Steekt de characters en movies in de array
             if(characters.length === 0 && movies.length === 0){
-                generateCharacters(req);
+                generateCharacters(req); 
                 generateMovies(req);
             }
+            quotesSuddenDeath.push(randomQuote);
 
             res.render("suddendeath", {
                 //Geeft de rondes mee
@@ -129,9 +132,14 @@ export default function suddendeathRouter() {
             }
             randomQuote = undefined;
             if(rightOrWrongCharacterSuddenDeath[rightOrWrongCharacterSuddenDeath.length - 1] === false || rightOrWrongMovieSuddenDeath[rightOrWrongMovieSuddenDeath.length - 1] === false || rightOrWrongCharacterSuddenDeath.length < req.session.rounds || rightOrWrongMovieSuddenDeath.length < req.session.rounds){
+                totalRounds = (req.session.rounds as number - 1).toString();
+                finishedSuddenDeath = true;
                 res.redirect("/result");
             }
-            res.redirect("/suddendeath")
+            else{
+                quotesSuddenDeath.pop();
+                res.redirect("/suddendeath");
+            }
         } else {
             res.redirect("/login");
         }
@@ -322,4 +330,7 @@ async function generateMovies(req: express.Request) {
     }
 
     movies.push(...moviesPerRound.filter((m) => m !== undefined));
+}
+export function stoppedSuddenDeath(){
+    finishedSuddenDeath = false;
 }

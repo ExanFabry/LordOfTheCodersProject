@@ -5,6 +5,7 @@ import { addToBlacklist, addToFavorite, client } from "../database";
 import { ObjectId } from "mongodb";
 import session from "express-session";
 import { Session } from "inspector/promises";
+import { stoppedSuddenDeath } from "./suddendeath";
 
 export let quotes: Quotes[] = [];
 let characters: {
@@ -32,6 +33,7 @@ export default function tenRoundsRouter() {
 
     router.get("/", async (req, res) => {
         let randomNumbers: number[] = [];
+        stoppedSuddenDeath();
         if (+(req.session.rounds as number) <= 2 || +(req.session.rounds as number) === undefined) {
             try {
                 await getQuotes();

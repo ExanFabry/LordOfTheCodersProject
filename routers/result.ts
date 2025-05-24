@@ -2,6 +2,7 @@ import express from "express";
 import { rightOrWrongCharacter, rightOrWrongMovie } from "./10-rounds";
 import { client } from "../database";
 import { User } from "../interfaces/types";
+import { finishedSuddenDeath, totalRounds } from "./suddendeath";
 
 let score: number = 0;
 
@@ -21,10 +22,20 @@ export default function resultRouter() {
                 user: req.session.user as User,
                 score: score
             }
+            let userScoreSuddenDeath: {
+                user: User,
+                score: number
+            } = {
+                user: req.session.user as User,
+                score: +(totalRounds)
+            }
             const scoreCollection = await client.db("Les").collection("score").insertOne(userScore);
+            const scoreSuddenDeathCollection = await client.db("Les").collection("sudden-death-score").insertOne(userScoreSuddenDeath);
             res.render("result", {
                 user: req.session.user,
-                score: `${score}/10`
+                score: `${score}/10`,
+                suddenDeath: finishedSuddenDeath,
+                scoreSuddenDeath: totalRounds
             });
         } else {
             res.redirect("/login");

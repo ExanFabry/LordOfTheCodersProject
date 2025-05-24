@@ -22,6 +22,7 @@ header article p, footer p {
 }
 header article{
     margin-right: 5%;
+    width: 100%;
 }
 
 /*Footer*/
