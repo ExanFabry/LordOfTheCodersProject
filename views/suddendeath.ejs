@@ -81,12 +81,14 @@
           <% } %>
         </article>
       </section>
-
-      <section id="submit-section">
-        <form action="/suddendeath/increase-rounds" method="POST">
-          <button id="Submit-button" class="next-button" type="submit">Submit</button>
-        </form>
-      </section>
+      
+      <% if (characterAnswered && movieAnswered) { %>
+        <section id="submit-section">
+          <form action="/suddendeath/increase-rounds" method="POST">
+            <button id="Submit-button" class="next-button" type="submit">Submit</button>
+          </form>
+        </section>
+      <% } %>
     </main>
     <%- include("partials/footer") %>
     <form action="suddendeath/blacklist" method="post">

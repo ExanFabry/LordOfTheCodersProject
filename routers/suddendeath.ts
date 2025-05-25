@@ -79,6 +79,16 @@ export default function suddendeathRouter() {
             }
             quotesSuddenDeath.push(randomQuote);
 
+            
+            let characterAnswered: boolean = true; 
+            let movieAnswered: boolean = true;
+            if(rightOrWrongCharacterSuddenDeath.length < req.session.rounds){
+                movieAnswered = false;
+            }
+            if(rightOrWrongMovieSuddenDeath.length < req.session.rounds){
+                characterAnswered = false;
+            }
+
             res.render("suddendeath", {
                 //Geeft de rondes mee
                 rounds: req.session.rounds,
@@ -91,7 +101,9 @@ export default function suddendeathRouter() {
                 //Welk character is geselecteerd
                 characterColorChange: characterColorChange,
                 //Welke film is geselecteerd
-                movieColorChange: movieColorChange
+                movieColorChange: movieColorChange,
+                characterAnswered: characterAnswered,
+                movieAnswered: movieAnswered
             });
         } else {
             res.redirect("/login");

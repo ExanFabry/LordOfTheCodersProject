@@ -93,21 +93,17 @@
         <!-- <form action="10-rounds/decrease-rounds" method="POST">
           <button type="submit" class="next-button">Vorige</button>
         </form> -->
-        <% if (rounds === 10) { %>
-          <form action="/result" method="get">
-            <button id="Submit-button" class="next-button">Indienen</button>
-          </form>
+        <% if (characterAnswered && movieAnswered) { %>
+          <% if (rounds === 10) { %>
+            <form action="/result" method="get">
+              <button id="Submit-button" class="next-button">Indienen</button>
+            </form>
           <% } else { %>
-            <% //if (questionAnsweredBoolean[rounds]) { %>
               <form action="10-rounds/increase-rounds" method="POST">
                 <button type="submit" class="next-button">Volgende</button>
               </form>
-            <% //} else if(!questionAnsweredBoolean[rounds]) { %>
-            <!-- <form action="10-rounds/complete-question" method="POST">
-              <button type="submit" class="next-button">Indienen</button>
-            </form> -->
-            <% //} %>
           <% } %>
+        <% } %>
         </section>
     </main>
 

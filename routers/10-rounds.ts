@@ -27,6 +27,8 @@ export let rightOrWrongMovie: boolean[] = [];
 
 let characterColorChange: number | undefined;
 let movieColorChange: number | undefined;
+let characterAnswered: boolean = false;
+let movieAnswered: boolean = false;
 
 export default function tenRoundsRouter() {
     const router = express.Router();
@@ -124,6 +126,8 @@ export default function tenRoundsRouter() {
                 movieOptions: moviesForRound,
                 characterColorChange: characterColorChange,
                 movieColorChange: movieColorChange,
+                characterAnswered: characterAnswered,
+                movieAnswered: movieAnswered
             });
         } else {
             res.redirect("/login");
@@ -161,6 +165,8 @@ export default function tenRoundsRouter() {
                 req.session.rounds = 0;
             }
             req.session.rounds += 1;
+            characterAnswered = false;
+            movieAnswered = false;
             res.redirect("/10-rounds");
         } else {
             res.redirect("/login");
@@ -189,6 +195,7 @@ export default function tenRoundsRouter() {
             const characterValue = JSON.parse(req.body.characterOption);
             const characterIndex = +(req.body.characterIndex as number);
             characterColorChange = characterIndex;
+            characterAnswered = true;
             if (characterValue.correctCharacter === false) {
                 if (req.session.rounds !== undefined) {
                     if (rightOrWrongCharacter.length < req.session.rounds) {
@@ -217,6 +224,7 @@ export default function tenRoundsRouter() {
             const movieValue = JSON.parse(req.body.movieOption);
             const movieIndex = +(req.body.movieIndex as number);
             movieColorChange = movieIndex;
+            movieAnswered = true;
             console.log(movieValue);
             if (movieValue.correctMovie === false) {
                 if (req.session.rounds !== undefined) {
