@@ -1,13 +1,19 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 body {
-    background-image: url("/assets/10-rounds-wrong-answers-background.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    background: url("/assets/10-rounds-wrong-answers-background.png") no-repeat center fixed;
     background-size: cover;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 main{
     padding: 15px;
     margin: 5vw;
- 
+    flex: 1;
 }
 h2{
     border: 2px;
