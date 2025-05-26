@@ -6,6 +6,8 @@ import bcrypt from "bcrypt";
 import { quotes } from "./routers/10-rounds";
 import 'express-session';
 import { Request } from "express";
+import { ObjectId } from "mongodb";
+import { characterArray, movieArray } from "./api";
 
 export const MONGODB_URI = process.env.MONGODB_URI ?? "mongodb://localhost:27017";
 
@@ -13,14 +15,14 @@ export const client = new MongoClient(MONGODB_URI);
 
 export const userCollection = client.db("login-express").collection<User>("users");
 
-const saltRounds : number = 10;
+const saltRounds: number = 10;
 
 async function createInitialUser() {
     if (await userCollection.countDocuments() > 0) {
         return;
     }
-    let email : string | undefined = process.env.ADMIN_EMAIL;
-    let password : string | undefined = process.env.ADMIN_PASSWORD;
+    let email: string | undefined = process.env.ADMIN_EMAIL;
+    let password: string | undefined = process.env.ADMIN_PASSWORD;
     if (email === undefined || password === undefined) {
         throw new Error("ADMIN_EMAIL and ADMIN_PASSWORD must be set in environment");
     }
@@ -62,7 +64,7 @@ export async function login(email: string, password: string) {
     if (email === "" || password === "") {
         throw new Error("Email and password required");
     }
-    let user : User | null = await userCollection.findOne<User>({email: email});
+    let user: User | null = await userCollection.findOne<User>({ email: email });
     if (user) {
         if (await bcrypt.compare(password, user.password!)) {
             return user;
@@ -74,28 +76,43 @@ export async function login(email: string, password: string) {
     }
 }
 
-export async function addToFavorite(quote: number, req: Request){
+export async function addToFavorite(quote: number, req: Request) {
     await client.connect();
-    
-    let favoriteQuote: FavoriteQuote = { 
-        quote:quotes[quote].dialog, 
-        character: quotes[quote].character, 
+
+    let favoriteQuote: FavoriteQuote = {
+        quote: quotes[quote].dialog,
+        character: characterArray[quote].name,
+        movie: movieArray[quote].name,
         user: req.session.user
     };
     const result = await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
     let readResult: FavoriteQuote[] = await (client.db("Les").collection("favoriteQuotes").find<FavoriteQuote>({})).toArray();
 }
 
-export async function addToBlacklist(quote: number, reason: string, req: Request){
+export async function addToBlacklist(quoteIndex: number, reason: string, req: Request) {
     await client.connect();
-    
-    let blacklistQuote: Answer = { 
-        quote:quotes[quote].dialog, 
-        character: quotes[quote].character,
+
+    // const quotes = req.session.quotes;
+    // if (!quotes || !quotes[quoteIndex]) {
+    //     throw new Error("Quote niet gevonden in sessie.");
+    // }
+
+    let blacklistQuote: Answer = {
+        quote: quotes[quoteIndex].dialog,
+        character: characterArray[quoteIndex].name,
         user: req.session.user,
         reason: reason
+
     };
     const result = await client.db("Les").collection("blacklistQuotes").insertOne(blacklistQuote);
-    let readResult: Answer[] = await (client.db("Les").collection("blacklistQuotes").find<Answer>({})).toArray();
+    let readResult: Answer[] = await client.db("Les").collection("blacklistQuotes").find<Answer>({}).toArray();
     console.log(readResult);
+}
+export async function deleteFromBlacklist(id: string) {
+    await client.connect();
+    await client.db("Les").collection("blacklistQuotes").deleteOne({ _id: new ObjectId(id) });
+}
+export async function deleteFromFavorite(id: string, user: string) {
+    await client.connect();
+    await client.db("Les").collection("favoriteQuotes").deleteOne({ _id: new ObjectId(id), user });
 }

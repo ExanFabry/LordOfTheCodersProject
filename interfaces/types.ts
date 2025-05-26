@@ -17,7 +17,7 @@ export interface SessionData {
     message?: FlashMessage;
 }
 
-export interface Quotes{
+export interface Quotes {
     _id: ObjectId;
     dialog: string;
     movie: string;
@@ -25,7 +25,7 @@ export interface Quotes{
     id: string;
 }
 
-export interface Movies{
+export interface Movies {
     _id: ObjectId;
     name: string;
     runtimeInMinutes: number;
@@ -36,7 +36,7 @@ export interface Movies{
     rottenTomatoesScore: number;
 }
 
-export interface Characters{
+export interface Characters {
     _id: ObjectId;
     name: string;
     wikiUrl: string;
@@ -50,13 +50,15 @@ export interface Characters{
     spouse: string;
 }
 
-export interface FavoriteQuote{
+export interface FavoriteQuote {
+    _id?: ObjectId;
     quote: string;
     character: string;
     user: User | undefined;
+    movie: string;
 }
 
-export interface Answer{
+export interface Answer {
     quote: string;
     character: string;
     user: User | undefined;

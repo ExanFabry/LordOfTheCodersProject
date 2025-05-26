@@ -20,30 +20,118 @@
       type="image/x-icon"
       href="/assets/lord-of-the-coders-logo.png"
     />
+    <audio autoplay loop>
+      <!-- https://archive.org/details/TheLordOfTheRings_OST -->
+      <source src="/assets/theshire.mp3" type="audio/mpeg" />
+    </audio>
+    <script src="/javascript/export-csv.js" defer></script>
+    <script>
+      function exportBlacklistTXT(data, filename) {
+        let text = '';
+        data.forEach(function(item, idx) {
+          text += `Q: "${item.quote}"
+A: ${item.answer}
+R: ${item.reason}\n\n`;
+        });
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    </script>
   </head>
   <body>
     <%- include("partials/header") %>
     <main>
       <section class="kader">
         <h2 class="title">Blacklist</h2>
+        <button class="btn btn-success mb-3" id="exportBlacklistTXT">Print to TXT</button>
         <section class="list">
+          
+          
           <article class="listkader">
             <h2>Quote (Q)</h2>
             <h2>Answer (A)</h2>
             <h2>Reden (R)</h2>
           </article>
-
+          
+         <% for (let i = 0; i < blacklistArray.length; i++) {
+  const quote = blacklistArray[i].quote;
+  const answer = characterArray[i].name;
+  const reason = blacklistArray[i].reason;
+  const quoteId = blacklistArray[i]._id;
+%>
+<article class="listkader">
+  <h4>Q: "<%= quote %>"</h4>
+  <h4>A: <%= answer %></h4>
+  <h5>R: <span class="reason-text"><%= reason %></span>
+    <button type="button" class="btn btn-primary btn-sm edit-reason-btn">Edit</button>
+    <form action="/blacklist/delete/<%= quoteId %>" method="POST" style="display:inline;">
+      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </form>
+  </h5>
+</article>
+<% } %>
+          <% if (blacklistArray.length === 0) { %>
           <article class="listkader">
-            <h4>Q: "You shall not pass"</h4>
-            <h4>A: Gandalf - Fellowship of the ring</h4>
-            <h5>R: Ik vond deze quote te cheesy</h5>
+            <h4>Er zijn momenteel geen quotes in de blacklist.</h4>
           </article>
-          <article class="listkader">
-            <h4>Q: "So you have chosen death"</h4>
-            <h4>A: Saruman - Fellowship of the ring</h4>
-            <h5>R: Ik voelde me bedreigd.</h5>
-          </article>
+          <%  
+          
+         } %>
+          
         </section>
       </section>
     </main>
+    <% const blacklistExportData = blacklistArray.map(function(item, i) {
+      return {
+        quote: item.quote,
+        answer: characterArray[i] ? characterArray[i].name : '',
+        reason: item.reason
+      };
+    }); %>
+    <script>
+      window.blacklistData = <%- JSON.stringify(blacklistExportData) %>;
+      document.getElementById('exportBlacklistTXT').addEventListener('click', function() {
+        exportBlacklistTXT(window.blacklistData, 'blacklist.txt');
+      });
+    </script>
     <%- include("partials/footer") %>
+    <script>
+document.querySelectorAll('.edit-reason-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const h5 = btn.closest('h5');
+    const reasonText = h5.querySelector('.reason-text');
+    const currentReason = reasonText.textContent;
+    // Hide the reason text and edit button
+    reasonText.style.display = 'none';
+    btn.style.display = 'none';
+    // Create the form dynamically
+    const form = document.createElement('form');
+    form.className = 'edit-reason-form d-inline';
+    form.action = '/blacklist/edit/' + btn.closest('article').querySelector('form[action^="/blacklist/delete/"]').action.split('/').pop();
+    form.method = 'POST';
+    form.style.marginTop = '8px';
+    form.innerHTML = `
+      <input type="text" name="reason" value="${currentReason}" class="form-control form-control-sm" required style="width: 200px; display: inline-block;" />
+      <button type="submit" class="btn btn-primary btn-sm">Save</button>
+      <button type="button" class="btn btn-secondary btn-sm cancel-edit">Cancel</button>
+    `;
+    h5.insertBefore(form, h5.querySelector('form[action^="/blacklist/delete/"]'));
+    // Cancel button logic
+    form.querySelector('.cancel-edit').addEventListener('click', function() {
+      form.remove();
+      reasonText.style.display = 'inline';
+      btn.style.display = 'inline-block';
+    });
+    // On submit, let the form submit normally (page reload)
+  });
+});
+</script>
+  </body>
+</html>
