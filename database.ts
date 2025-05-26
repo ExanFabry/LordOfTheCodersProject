@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import { MongoClient } from "mongodb";
-import { Answer, FavoriteQuote, User } from "./interfaces/types";
+import { Answer, Characters, FavoriteQuote, User } from "./interfaces/types";
 import bcrypt from "bcrypt";
 import { quotes } from "./routers/10-rounds";
 import 'express-session';
@@ -80,9 +80,15 @@ export async function addToFavorite(quote: number, req: Request) {
     await client.connect();
 
     let favoriteQuote: FavoriteQuote = {
-        quote: quotes[quote].dialog,
-        character: characterArray[quote].name,
-        movie: movieArray[quote].name,
+        quote: quotes[quote - 1].dialog,
+        character: (() => {
+            const foundCharacter = characterArray.find(c => c._id.toString() === quotes[quote - 1].character)?.name;
+            return foundCharacter ? foundCharacter.toString() : "Unknown Character";
+        })(),
+        movie: (() => {
+            const foundMovie = movieArray.find(c => c._id.toString() === quotes[quote - 1].movie)?.name;
+            return foundMovie ? foundMovie.toString() : "Unknown Movie";
+        })(),
         user: req.session.user
     };
     const result = await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
@@ -97,9 +103,12 @@ export async function addToBlacklist(quoteIndex: number, reason: string, req: Re
     //     throw new Error("Quote niet gevonden in sessie.");
     // }
 
-    let blacklistQuote: Answer = {
+    let blacklistQuote: Answer = { 
         quote: quotes[quoteIndex].dialog,
-        character: characterArray[quoteIndex].name,
+        character: (() => {
+            const foundCharacter = characterArray.find(c => c._id.toString() === quotes[quoteIndex].character.toString())?.name;
+            return foundCharacter ? foundCharacter.toString() : "Unknown Character";
+        })(),
         user: req.session.user,
         reason: reason
 

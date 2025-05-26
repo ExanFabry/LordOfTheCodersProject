@@ -37,7 +37,8 @@ main{
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     padding: 25px;
-    margin: 0;
+    min-height: 30vh;
+    height: auto;
 }
 .list{
     border: 5px solid rgba(227, 167, 34,0.5);
@@ -59,6 +60,30 @@ main{
 }
 footer{
     padding-top: 1%;
+}
+
+.btn-danger {
+    background-color: #b94a48 !important; /* deep gold-brown/red, fits theme */
+    border-color: #e3a722 !important;
+    color: #fff !important;
+    transition: background 0.2s;
+}
+.btn-danger:hover, .btn-danger:focus {
+    background-color: #a0402a !important;
+    border-color: #e3a722 !important;
+    color: #fff !important;
+}
+
+.btn-success {
+    background-color: #85743d !important; /* muted gold/olive, fits theme */
+    border-color: #e3a722 !important;
+    color: #fff !important;
+    transition: background 0.2s;
+}
+.btn-success:hover, .btn-success:focus {
+    background-color: #a68c4a !important;
+    border-color: #e3a722 !important;
+    color: #fff !important;
 }
 
 @media (max-width : 420px) {

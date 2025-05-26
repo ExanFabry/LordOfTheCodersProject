@@ -61,11 +61,11 @@ R: ${item.reason}\n\n`;
           </article>
           
          <% for (let i = 0; i < blacklistArray.length; i++) {
-  const quote = blacklistArray[i].quote;
-  const answer = characterArray[i].name;
-  const reason = blacklistArray[i].reason;
-  const quoteId = blacklistArray[i]._id;
-%>
+          const quote = blacklistArray[i].quote;
+          const answer = blacklistArray[i].character;
+          const reason = blacklistArray[i].reason;
+          const quoteId = blacklistArray[i]._id;
+        %>
 <article class="listkader">
   <h4>Q: "<%= quote %>"</h4>
   <h4>A: <%= answer %></h4>
