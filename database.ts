@@ -103,7 +103,7 @@ export async function addToBlacklist(quoteIndex: number, reason: string, req: Re
         character: characterArray[quoteIndex].name,
         user: req.session.user,
         reason: reason
-        
+
     };
     const result = await client.db("Les").collection("blacklistQuotes").insertOne(blacklistQuote);
     let readResult: Answer[] = await client.db("Les").collection("blacklistQuotes").find<Answer>({}).toArray();
@@ -112,4 +112,8 @@ export async function addToBlacklist(quoteIndex: number, reason: string, req: Re
 export async function deleteFromBlacklist(id: string) {
     await client.connect();
     await client.db("Les").collection("blacklistQuotes").deleteOne({ _id: new ObjectId(id) });
+}
+export async function deleteFromFavorite(id: string, user: string) {
+    await client.connect();
+    await client.db("Les").collection("favoriteQuotes").deleteOne({ _id: new ObjectId(id), user });
 }

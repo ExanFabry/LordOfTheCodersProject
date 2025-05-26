@@ -36,8 +36,7 @@
           <article class="listkader favorite-item" data-favorite-id="<%= favoritesWithDetails[i]._id %>">
             <h4>"<%= favoritesWithDetails[i].quote %>"</h4>
             <h4> <%= favoritesWithDetails[i].characterName %> - <%= favoritesWithDetails[i].movieName %>
-              <form class="remove-favorite-form" action="/favorite/delete" method="POST" style="display:inline;">
-                <input type="hidden" name="id" value="<%= favoritesWithDetails[i]._id %>" />
+              <form class="remove-favorite-form" action="/favorite/delete/<%= favoritesWithDetails[i]._id %>" method="POST" style="display:inline;">
                 <button type="submit" class="btn btn-danger">Remove</button>
               </form>
             </h4>

@@ -8,7 +8,11 @@ main{
     padding: 15px;
     margin-bottom: 13vw;
     margin-top: 2vw;
-    height: 100vh;
+    min-height: 60vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 .title{
     display: flex;
@@ -18,18 +22,22 @@ main{
     background-color:#554827;
     color: lightgrey;
     margin-bottom: 1vw;
+    border: 2px solid rgba(227, 167, 34,0.5); /* Match .listkader border */
 }
 .kader{
     border: 5px solid rgba(227, 167, 34,0.5);
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 15px;
     padding: 25px;
-
+    min-height: 30vh;
+    height: auto;
 }
 .list{
     border: 5px solid rgba(227, 167, 34,0.5);
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 15px;
+    min-height: 10vh;
+    height: auto;
 }
 .listkader{
     padding-top: 10px;
@@ -41,6 +49,30 @@ main{
     grid-template-columns:repeat(2,1fr); ;
     padding-right: 15px;
     color: lightgrey;
+}
+
+.btn-danger {
+    background-color: #b94a48 !important; /* deep gold-brown/red, fits theme */
+    border-color: #e3a722 !important;
+    color: #fff !important;
+    transition: background 0.2s;
+}
+.btn-danger:hover, .btn-danger:focus {
+    background-color: #a0402a !important;
+    border-color: #e3a722 !important;
+    color: #fff !important;
+}
+
+.btn-success {
+    background-color: #85743d !important; /* muted gold/olive, fits theme */
+    border-color: #e3a722 !important;
+    color: #fff !important;
+    transition: background 0.2s;
+}
+.btn-success:hover, .btn-success:focus {
+    background-color: #a68c4a !important;
+    border-color: #e3a722 !important;
+    color: #fff !important;
 }
 
 @media (max-width : 420px) {

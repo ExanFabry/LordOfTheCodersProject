@@ -23,7 +23,7 @@ export default function blacklistRouter() {
             .toArray();
         await getCharacters();
 
-               
+
         res.render("blacklist", {
             user: req.session.user,
             blacklistArray: blacklistArray,
@@ -58,9 +58,24 @@ export default function blacklistRouter() {
             await deleteFromBlacklist(quoteId);
             res.redirect("/blacklist")
         };
-        
-        
-    
+
+
+
+    });
+    router.post("/edit/:id", async (req, res) => {
+        if (!req.session.user) {
+            return res.redirect("/login");
+        }
+        const quoteId = req.params.id as string;
+        const newReason = req.body.reason;
+        if (ObjectId.isValid(quoteId) && newReason) {
+            await client.connect();
+            await client.db("Les").collection("blacklistQuotes").updateOne(
+                { _id: new ObjectId(quoteId) },
+                { $set: { reason: newReason } }
+            );
+        }
+        res.redirect("/blacklist");
     });
 
     return router;

@@ -61,26 +61,22 @@ R: ${item.reason}\n\n`;
           </article>
           
          <% for (let i = 0; i < blacklistArray.length; i++) {
-           console.log(blacklistArray.length);
-            console.log(characterArray.length);
-            
-            const quote = blacklistArray[i].quote;
-            const answer = characterArray[i].name;
-            const reason = blacklistArray[i].reason;
-          %>
-          <article class="listkader">
-            <h4>Q: "<%= quote %>"</h4>
-            <h4>A: <%= answer %></h4>
-            <h5>R: <%= reason %>
-              <form action="/blacklist/edit/<%=id %>" method="POST" style="display:inline;">
-                <button type="submit" class="btn btn-primary">Edit</button>
-              </form>  <form action="/blacklist/delete/<%= blacklistArray[i]._id %>" method="POST" style="display:inline;">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-              </h5>
-          
-          </article>
-          <%  }  %>
+  const quote = blacklistArray[i].quote;
+  const answer = characterArray[i].name;
+  const reason = blacklistArray[i].reason;
+  const quoteId = blacklistArray[i]._id;
+%>
+<article class="listkader">
+  <h4>Q: "<%= quote %>"</h4>
+  <h4>A: <%= answer %></h4>
+  <h5>R: <span class="reason-text"><%= reason %></span>
+    <button type="button" class="btn btn-primary btn-sm edit-reason-btn">Edit</button>
+    <form action="/blacklist/delete/<%= quoteId %>" method="POST" style="display:inline;">
+      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+    </form>
+  </h5>
+</article>
+<% } %>
           <% if (blacklistArray.length === 0) { %>
           <article class="listkader">
             <h4>Er zijn momenteel geen quotes in de blacklist.</h4>
@@ -106,5 +102,36 @@ R: ${item.reason}\n\n`;
       });
     </script>
     <%- include("partials/footer") %>
+    <script>
+document.querySelectorAll('.edit-reason-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    const h5 = btn.closest('h5');
+    const reasonText = h5.querySelector('.reason-text');
+    const currentReason = reasonText.textContent;
+    // Hide the reason text and edit button
+    reasonText.style.display = 'none';
+    btn.style.display = 'none';
+    // Create the form dynamically
+    const form = document.createElement('form');
+    form.className = 'edit-reason-form d-inline';
+    form.action = '/blacklist/edit/' + btn.closest('article').querySelector('form[action^="/blacklist/delete/"]').action.split('/').pop();
+    form.method = 'POST';
+    form.style.marginTop = '8px';
+    form.innerHTML = `
+      <input type="text" name="reason" value="${currentReason}" class="form-control form-control-sm" required style="width: 200px; display: inline-block;" />
+      <button type="submit" class="btn btn-primary btn-sm">Save</button>
+      <button type="button" class="btn btn-secondary btn-sm cancel-edit">Cancel</button>
+    `;
+    h5.insertBefore(form, h5.querySelector('form[action^="/blacklist/delete/"]'));
+    // Cancel button logic
+    form.querySelector('.cancel-edit').addEventListener('click', function() {
+      form.remove();
+      reasonText.style.display = 'inline';
+      btn.style.display = 'inline-block';
+    });
+    // On submit, let the form submit normally (page reload)
+  });
+});
+</script>
   </body>
 </html>
