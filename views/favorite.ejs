@@ -30,11 +30,17 @@
     <main>
       <section class="kader">
         <h2 class="title">Favorites</h2>
+        <button class="btn btn-success mb-3" id="exportFavoritesTXT">Print to TXT</button>
         <section class="list">
           <% for (let i = 0; i < favoritesWithDetails.length; i++) { %>
-          <article class="listkader">
+          <article class="listkader favorite-item" data-favorite-id="<%= favoritesWithDetails[i]._id %>">
             <h4>"<%= favoritesWithDetails[i].quote %>"</h4>
-            <h4> <%= favoritesWithDetails[i].characterName %> - <%= favoritesWithDetails[i].movieName %></h4> 
+            <h4> <%= favoritesWithDetails[i].characterName %> - <%= favoritesWithDetails[i].movieName %>
+              <form class="remove-favorite-form" action="/favorite/delete" method="POST" style="display:inline;">
+                <input type="hidden" name="id" value="<%= favoritesWithDetails[i]._id %>" />
+                <button type="submit" class="btn btn-danger">Remove</button>
+              </form>
+            </h4>
           </article>
           <% } %>
           <% if (favoritesWithDetails.length === 0) { %>
@@ -45,4 +51,52 @@
         </section>
       </section>
     </main>
+    <script src="/javascript/export-csv.js" defer></script>
+    <script>
+      document.getElementById('exportFavoritesTXT').addEventListener('click', function() {
+        const articles = document.querySelectorAll('article.favorite-item[data-favorite-id]');
+        let text = '';
+        articles.forEach(function(article) {
+          const h4s = article.querySelectorAll('h4');
+          if (h4s.length >= 2) {
+            const quote = h4s[0].innerText.replace(/^"|"$/g, '');
+            const characterName = h4s[1].innerText.split(' - ')[0].trim();
+            text += `${quote} - ${characterName}\n`;
+          }
+        });
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'favorites.txt';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+      document.querySelectorAll('.remove-favorite-form').forEach(function(form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          const article = form.closest('article.favorite-item[data-favorite-id]');
+          if (!article) return;
+          const formData = new FormData(form);
+          fetch(form.action, {
+            method: 'POST',
+            body: formData
+          })
+            .then(function(res) {
+              if (res.ok) {
+                article.remove();
+              } else {
+                alert('Failed to remove favorite.');
+              }
+            })
+            .catch(function() {
+              alert('Failed to remove favorite.');
+            });
+        });
+      });
+    </script>
     <%- include("partials/footer") %>
+  </body>
+</html>

@@ -25,7 +25,7 @@ export interface Quotes {
     id: string;
 }
 
-export interface Movies{
+export interface Movies {
     _id: ObjectId;
     name: string;
     runtimeInMinutes: number;
@@ -51,6 +51,7 @@ export interface Characters {
 }
 
 export interface FavoriteQuote {
+    _id?: ObjectId;
     quote: string;
     character: string;
     user: User | undefined;

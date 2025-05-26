@@ -24,12 +24,33 @@
       <!-- https://archive.org/details/TheLordOfTheRings_OST -->
       <source src="/assets/theshire.mp3" type="audio/mpeg" />
     </audio>
+    <script src="/javascript/export-csv.js" defer></script>
+    <script>
+      function exportBlacklistTXT(data, filename) {
+        let text = '';
+        data.forEach(function(item, idx) {
+          text += `Q: "${item.quote}"
+A: ${item.answer}
+R: ${item.reason}\n\n`;
+        });
+        const blob = new Blob([text], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+    </script>
   </head>
   <body>
     <%- include("partials/header") %>
     <main>
       <section class="kader">
         <h2 class="title">Blacklist</h2>
+        <button class="btn btn-success mb-3" id="exportBlacklistTXT">Print to TXT</button>
         <section class="list">
           
           
@@ -71,4 +92,19 @@
         </section>
       </section>
     </main>
+    <% const blacklistExportData = blacklistArray.map(function(item, i) {
+      return {
+        quote: item.quote,
+        answer: characterArray[i] ? characterArray[i].name : '',
+        reason: item.reason
+      };
+    }); %>
+    <script>
+      window.blacklistData = <%- JSON.stringify(blacklistExportData) %>;
+      document.getElementById('exportBlacklistTXT').addEventListener('click', function() {
+        exportBlacklistTXT(window.blacklistData, 'blacklist.txt');
+      });
+    </script>
     <%- include("partials/footer") %>
+  </body>
+</html>

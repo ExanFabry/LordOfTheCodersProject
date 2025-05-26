@@ -24,11 +24,17 @@ export default function favoriteRouter() {
         await getMovies();
 
         // Build a new array with quote, characterName, movieName
-        const favoritesWithDetails = favoriteArray.map(fav => {
+        const favoritesWithDetails: any[] = favoriteArray.map(fav => {
             // Try to match by string value of ObjectId or by name
             let movie = movieArray.find(m => m._id.toString() === String(fav.movie) || m.name === fav.movie);
             let character = characterArray.find(c => c._id.toString() === String(fav.character) || c.name === fav.character);
+            // Defensive: fallback to string or log if _id is missing
+            let id = fav._id ? fav._id : (fav as any)._id ? (fav as any)._id : undefined;
+            if (!id) {
+                console.warn('Favorite quote is missing _id:', fav);
+            }
             return {
+                _id: id,
                 quote: fav.quote,
                 characterName: character ? character.name : fav.character,
                 movieName: movie ? movie.name : fav.movie
