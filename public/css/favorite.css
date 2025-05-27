@@ -15,7 +15,8 @@ main {
     padding: 15px;
     margin-bottom: 2vw;
     margin-top: 2vw;
-    min-height: 100vh;
+    min-height: 30vh; /* Reduced from 100vh to 30vh for less content */
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -87,7 +88,9 @@ footer {
         grid-template-columns: 1fr;
     }
     footer {
-        /* padding-top: 10%; */
         padding-bottom: -10%;
+    }
+    main {
+        min-height: 20vh; /* Even less on mobile */
     }
 }
