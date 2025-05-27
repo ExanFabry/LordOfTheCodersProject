@@ -49,3 +49,11 @@ section{
     margin-top: 30px;
    
 }
+.answer-correct {
+    color: #4caf50 !important; /* green */
+    font-weight: bold;
+}
+.answer-wrong {
+    color: #e53935 !important; /* red */
+    font-weight: bold;
+}

@@ -26,11 +26,11 @@
             <section class="d-flex justify-content-between align-items-center scores">
                 <article class="d-flex flex-column justify-content-between align-items-center">
                     <h1>10 Rounds</h1>
-                    <h1>3/10</h1>
+                    <h1><%= typeof highscore10 !== 'undefined' ? highscore10 : 0 %>/10</h1>
                 </article>
                 <article class="d-flex flex-column justify-content-between align-items-center">
                     <h1>Sudden death</h1>
-                    <h1>13</h1>
+                    <h1><%= typeof highscoreSD !== 'undefined' ? highscoreSD : 0 %></h1>
                 </article>
             </section>
         </section>
