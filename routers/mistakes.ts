@@ -11,6 +11,7 @@ export default function mistakesRouter() {
             // Build mistakes array for 10 rounds
             let mistakes: any[] = [];
             for (let i = 0; i < quotes.length; i++) {
+                if (!quotes[i]) continue; 
                 const quote = quotes[i]?.dialog;
                 const characterId = quotes[i]?.character;
                 const movieId = quotes[i]?.movie;
