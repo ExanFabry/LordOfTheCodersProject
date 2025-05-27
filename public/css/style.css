@@ -37,6 +37,10 @@ header article{
     margin-right: 5%;
     width: 100%;
 }
+.header-nav-container {
+    position: relative;
+    width: 100%;
+}
 
 /*Footer*/
 footer > div, footer > p, footer > article {
@@ -60,7 +64,7 @@ nav{
     background-color: black;
     width: 16.84vw;
     transform: translateX(494%);
-    height: 100vh;
+    min-height: 100vh;
     position: absolute;
     z-index: 1;
     background-image: url(../assets/schuifmenu-all-pages.png);
