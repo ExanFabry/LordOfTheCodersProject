@@ -91,7 +91,7 @@ R: ${item.reason}\n\n`;
     <% const blacklistExportData = blacklistArray.map(function(item, i) {
       return {
         quote: item.quote,
-        answer: characterArray[i] ? characterArray[i].name : '',
+        answer: (characterArray && characterArray[i]) ? characterArray[i].name : (item.character || ''),
         reason: item.reason
       };
     }); %>

@@ -34,7 +34,7 @@ let movieColorChange: number | undefined;
 export default function suddendeathRouter() {
     const router = express.Router();
 
-    router.get("/", async (req, res) => {        
+    router.get("/", async (req, res) => {
         //Haalt de blacklist quotes op.
         const resultBlackList = await client.db("Les").collection("blacklistQuotes").find<Quotes>({}).toArray();
         //Ervoor zorgen dat de api niet teveel wordt aangeroepen.
@@ -56,7 +56,7 @@ export default function suddendeathRouter() {
                 randomQuote = quotesArray[randomIndex];
             } while (
                 !randomQuote ||
-                resultBlackList.some((q) => q._id === randomQuote!._id) || 
+                resultBlackList.some((q) => q._id === randomQuote!._id) ||
                 randomQuote.character === undefined ||
                 randomQuote.movie === undefined
             );
@@ -67,25 +67,25 @@ export default function suddendeathRouter() {
         }
 
         //Als de gebruiker is ingelogd.
-        if (req.session.user) { 
+        if (req.session.user) {
             //Als req.session.rounds geen waarde heeft dan is het 1.
             if (!req.session.rounds) {
                 req.session.rounds = 1;
             }
             //Steekt de characters en movies in de array
-            if(characters.length === 0 && movies.length === 0){
-                generateCharacters(req); 
+            if (characters.length === 0 && movies.length === 0) {
+                generateCharacters(req);
                 generateMovies(req);
             }
             quotesSuddenDeath.push(randomQuote);
 
-            
-            let characterAnswered: boolean = true; 
+
+            let characterAnswered: boolean = true;
             let movieAnswered: boolean = true;
-            if(rightOrWrongCharacterSuddenDeath.length < req.session.rounds){
+            if (rightOrWrongCharacterSuddenDeath.length < req.session.rounds) {
                 movieAnswered = false;
             }
-            if(rightOrWrongMovieSuddenDeath.length < req.session.rounds){
+            if (rightOrWrongMovieSuddenDeath.length < req.session.rounds) {
                 characterAnswered = false;
             }
 
@@ -109,26 +109,29 @@ export default function suddendeathRouter() {
             res.redirect("/login");
         }
     });
-    
+
     router.post("/favorite", (req, res) => {
         if (req.session.user) {
-            addToFavorite((req.session.rounds as number) - 1, req);
+            // Add the current quote object (not by index) to favorites, just like in 10-rounds
+            if (quotesSuddenDeath[0]) {
+                addToFavorite(quotesSuddenDeath[0], req);
+            }
             res.redirect("/suddendeath");
         } else {
             res.redirect("/login");
         }
     });
-    
+
     router.post("/blacklist", (req, res) => {
-        if (req.session.user) { 
+        if (req.session.user) {
             addToBlacklist((req.session.rounds as number) - 1, req.body.blackListReason as string, req);
             console.log(req.session.blackListReason as string);
             res.redirect("/suddendeath");
         } else {
-            res.redirect("/login"); 
+            res.redirect("/login");
         }
     });
-    
+
     //Verhoogt de rounds variabele.
     router.post("/increase-rounds", (req, res) => {
         characters = [];
@@ -138,17 +141,17 @@ export default function suddendeathRouter() {
         if (req.session.user) {
             if (!req.session.rounds) {
                 req.session.rounds = 1;
-            } 
-            else{
+            }
+            else {
                 req.session.rounds += 1;
             }
             randomQuote = undefined;
-            if(rightOrWrongCharacterSuddenDeath[rightOrWrongCharacterSuddenDeath.length - 1] === false || rightOrWrongMovieSuddenDeath[rightOrWrongMovieSuddenDeath.length - 1] === false || rightOrWrongCharacterSuddenDeath.length < req.session.rounds || rightOrWrongMovieSuddenDeath.length < req.session.rounds){
+            if (rightOrWrongCharacterSuddenDeath[rightOrWrongCharacterSuddenDeath.length - 1] === false || rightOrWrongMovieSuddenDeath[rightOrWrongMovieSuddenDeath.length - 1] === false || rightOrWrongCharacterSuddenDeath.length < req.session.rounds || rightOrWrongMovieSuddenDeath.length < req.session.rounds) {
                 totalRounds = (req.session.rounds as number - 1).toString();
                 finishedSuddenDeath = true;
                 res.redirect("/result");
             }
-            else{
+            else {
                 quotesSuddenDeath.pop();
                 res.redirect("/suddendeath");
             }
@@ -156,7 +159,7 @@ export default function suddendeathRouter() {
             res.redirect("/login");
         }
     });
-    
+
     router.post("/add-character-points", (req, res) => {
         if (req.session.user) {
             const characterValue = JSON.parse(req.body.characterOption);
@@ -174,7 +177,7 @@ export default function suddendeathRouter() {
                 if (req.session.rounds !== undefined) {
                     if (rightOrWrongCharacterSuddenDeath.length < req.session.rounds) {
                         rightOrWrongCharacterSuddenDeath.push(true);
-                    } else { 
+                    } else {
                         rightOrWrongCharacterSuddenDeath[req.session.rounds] = true;
                     }
                 }
@@ -184,7 +187,7 @@ export default function suddendeathRouter() {
             res.redirect("/login");
         }
     });
-    
+
     router.post("/add-movie-points", (req, res) => {
         if (req.session.user) {
             const movieValue = JSON.parse(req.body.movieOption);
@@ -226,7 +229,7 @@ async function generateCharacters(req: express.Request) {
     let rightCharacterFind: Characters | undefined = characterArray.find((element) =>
         new ObjectId(element._id).equals(new ObjectId(quotesSuddenDeath[0].character))
     );
-    let rightCharacter: { 
+    let rightCharacter: {
         id: ObjectId;
         name: string | undefined;
         correctCharacter: boolean;
@@ -343,6 +346,6 @@ async function generateMovies(req: express.Request) {
 
     movies.push(...moviesPerRound.filter((m) => m !== undefined));
 }
-export function stoppedSuddenDeath(){
+export function stoppedSuddenDeath() {
     finishedSuddenDeath = false;
 }

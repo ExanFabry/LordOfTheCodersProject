@@ -36,6 +36,7 @@
                 <button type="submit" class="btn btn-danger">Remove</button>
               </form>
             </h4>
+            <!-- Add to favorite button for re-adding (if needed) -->
           </article>
           <% } %>
           <% if (favoritesWithDetails.length === 0) { %>
@@ -81,7 +82,10 @@
           })
             .then(function(res) {
               if (res.ok) {
+                // Remove the article from the DOM
                 article.remove();
+                // Also reload the page to ensure the server-side data is in sync
+                // window.location.reload();
               } else {
                 alert('Failed to remove favorite.');
               }
