@@ -16,16 +16,7 @@ export async function getQuotes() {
         }
     });
     const jsonData = await response.json();
-    if (Array.isArray(jsonData.docs)) {
-        quotesArray = jsonData.docs;
-        console.log("Fetched quotes:", quotesArray.length);
-        if (quotesArray.length > 0) {
-            console.log("First quote:", quotesArray[0]);
-        }
-    } else {
-        quotesArray = [];
-        console.error("API did not return a docs array for quotes:", jsonData);
-    }
+    quotesArray = jsonData.docs;
 }
 
 export async function getMovies() {
