@@ -16,7 +16,7 @@ main{
     flex: 1;
 }
 h2{
-    border: 2px;
+    border: 2px solid rgba(227, 167, 34,0.5);
     display: flex;
     justify-content: space-around;
     border-radius: 10px;
@@ -48,4 +48,12 @@ section{
     border-radius: 15px; 
     margin-top: 30px;
    
+}
+.answer-correct {
+    color: #4caf50 !important; /* green */
+    font-weight: bold;
+}
+.answer-wrong {
+    color: #e53935 !important; /* red */
+    font-weight: bold;
 }

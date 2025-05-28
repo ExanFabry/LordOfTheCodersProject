@@ -1,5 +1,5 @@
 import express from "express";
-import { rightOrWrongCharacter, rightOrWrongMovie } from "./10-rounds";
+import { quotes, rightOrWrongCharacter, rightOrWrongMovie, questionAnsweredArrayOfTypeBoolean } from "./10-rounds";
 import { client } from "../database";
 import { User } from "../interfaces/types";
 import { finishedSuddenDeath, totalRounds } from "./suddendeath";
@@ -43,10 +43,10 @@ export default function resultRouter() {
     });
     return router;
 }
-function addPoints(pointsArray: boolean[]){
-    for(let i: number = 0; i < pointsArray.length; i++){
-        if(pointsArray[i]){
-            score+=0.5;
+function addPoints(pointsArray: boolean[]) {
+    for (let i: number = 0; i < pointsArray.length; i++) {
+        if (pointsArray[i]) {
+            score += 0.5;
         }
     }
 }

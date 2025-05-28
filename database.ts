@@ -76,23 +76,22 @@ export async function login(email: string, password: string) {
     }
 }
 
-export async function addToFavorite(quote: number, req: Request) {
+export async function addToFavorite(quoteObj: any, req: Request) {
     await client.connect();
 
     let favoriteQuote: FavoriteQuote = {
-        quote: quotes[quote - 1].dialog,
+        quote: quoteObj.dialog,
         character: (() => {
-            const foundCharacter = characterArray.find(c => c._id.toString() === quotes[quote - 1].character)?.name;
-            return foundCharacter ? foundCharacter.toString() : "Unknown Character";
+            const foundCharacter = characterArray.find(c => c._id.toString() === quoteObj.character?.toString())?.name;
+            return foundCharacter ? foundCharacter.toString() : (quoteObj.characterName || "Unknown Character");
         })(),
         movie: (() => {
-            const foundMovie = movieArray.find(c => c._id.toString() === quotes[quote - 1].movie)?.name;
-            return foundMovie ? foundMovie.toString() : "Unknown Movie";
+            const foundMovie = movieArray.find(c => c._id.toString() === quoteObj.movie?.toString())?.name;
+            return foundMovie ? foundMovie.toString() : (quoteObj.movieName || "Unknown Movie");
         })(),
         user: req.session.user
     };
-    const result = await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
-    let readResult: FavoriteQuote[] = await (client.db("Les").collection("favoriteQuotes").find<FavoriteQuote>({})).toArray();
+    await client.db("Les").collection("favoriteQuotes").insertOne(favoriteQuote);
 }
 
 export async function addToBlacklist(quoteIndex: number, reason: string, req: Request) {
@@ -103,7 +102,7 @@ export async function addToBlacklist(quoteIndex: number, reason: string, req: Re
     //     throw new Error("Quote niet gevonden in sessie.");
     // }
 
-    let blacklistQuote: Answer = { 
+    let blacklistQuote: Answer = {
         quote: quotes[quoteIndex].dialog,
         character: (() => {
             const foundCharacter = characterArray.find(c => c._id.toString() === quotes[quoteIndex].character.toString())?.name;
@@ -121,7 +120,7 @@ export async function deleteFromBlacklist(id: string) {
     await client.connect();
     await client.db("Les").collection("blacklistQuotes").deleteOne({ _id: new ObjectId(id) });
 }
-export async function deleteFromFavorite(id: string, user: string) {
+export async function deleteFromFavorite(id: string) {
     await client.connect();
-    await client.db("Les").collection("favoriteQuotes").deleteOne({ _id: new ObjectId(id), user });
+    await client.db("Les").collection("favoriteQuotes").deleteOne({ _id: new ObjectId(id) });
 }

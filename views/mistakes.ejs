@@ -14,18 +14,30 @@
 <body>
     <%- include("partials/header") %>
     <main>
-        
         <section>
             <h2>Bekijk je juiste antwoorden</h2>
             <article class="kader">
-        <article class="listkader">
-            <h3>"You shall not pass"</h3>
-            <p class="answer">Juiste antwoord: Gandalf - Fellowship of the ring</p>
-        </article>
-        <article class="listkader">
-            <h3>"My Precious"</h3>
-            <p class="answer">Juiste antwoord: Smeagle - Fellowship of the ring</p>
-        </article></article></section>
+            <% if (mistakes && mistakes.length > 0) { %>
+                <% mistakes.forEach(function(item) { %>
+                    <article class="listkader">
+                        <h3>"<%= item.quote %>"</h3>
+                        <p class="answer <%= item.charCorrect ? 'answer-correct' : 'answer-wrong' %>">
+                            Karakter: <span><%= item.correctCharacter %></span>
+                        </p>
+                        <p class="answer <%= item.movieCorrect ? 'answer-correct' : 'answer-wrong' %>">
+                            Film: <span><%= item.correctMovie %></span>
+                        </p>
+                    </article>
+                <% }); %>
+            <% } else { %>
+                <article class="listkader">
+                    <h3>Geen fouten of antwoorden om te tonen.</h3>
+                </article>
+            <% } %>
+            </article>
+        </section>
     </main>
     <%- include("partials/footer") %>
+</body>
+</html>
 

@@ -57,6 +57,11 @@ export default function tenRoundsRouter() {
         if (quotes.length === 0 || quotes.length === 1) {
             await client.connect();
             const resultBlackList = await client.db("Les").collection("blacklistQuotes").find<Quotes>({}).toArray();
+            // Defensive: check quotesArray is defined and has enough items
+            if (!Array.isArray(quotesArray) || quotesArray.length < 10) {
+                res.status(500).send("Er zijn niet genoeg quotes beschikbaar om 10 unieke rondes te genereren.");
+                return;
+            }
             //Gebruik een for lus om 10 cijfers te genereren
             for (let i: number = 0; i < 10; i++) {
                 //Gebruik een lus tot het getal uniek is
@@ -136,12 +141,16 @@ export default function tenRoundsRouter() {
 
     router.post("/favorite", (req, res) => {
         if (req.session.user) {
-            addToFavorite(req.session.rounds as number, req);
+            // Only add the current quote, not all quotes
+            const currentRoundIndex = (req.session.rounds as number) - 1;
+            if (quotes[currentRoundIndex]) {
+                addToFavorite(quotes[currentRoundIndex], req);
+            }
             res.redirect("/10-rounds");
         } else {
             res.redirect("/login");
         }
-    }); 
+    });
 
     router.post("/blacklist", (req, res) => {
         if (req.session.user) {
@@ -301,7 +310,7 @@ async function generateCharacters(req: express.Request): Promise<void> {
             }
             if (
                 (randomCharacters !== undefined && characterArray[randomCharacters[j]]._id,
-                characterArray[randomCharacters[j]].name && !charactersPerRound.some((character) => character.name === characterArray[randomNumber].name))
+                    characterArray[randomCharacters[j]].name && !charactersPerRound.some((character) => character.name === characterArray[randomNumber].name))
             ) {
                 let newCharacter: {
                     id: ObjectId;
