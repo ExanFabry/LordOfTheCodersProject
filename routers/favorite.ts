@@ -23,21 +23,14 @@ export default function favoriteRouter() {
         await getCharacters();
         await getMovies();
 
-        // Build a new array with quote, characterName, movieName
-        // Only show quotes that actually exist in the database for this user
+        const movies = Array.isArray(movieArray) ? movieArray : [];
+        const characters = Array.isArray(characterArray) ? characterArray : [];
         const favoritesWithDetails: any[] = favoriteArray
-            .filter(fav => fav && fav.quote) // Remove any empty or preset/invalid entries
+            .filter(fav => fav && fav.quote)
             .map(fav => {
-                // Defensive: ensure arrays are defined
-                const movies = Array.isArray(movieArray) ? movieArray : [];
-                const characters = Array.isArray(characterArray) ? characterArray : [];
                 let movie = movies.find(m => m._id.toString() === String(fav.movie) || m.name === fav.movie);
                 let character = characters.find(c => c._id.toString() === String(fav.character) || c.name === fav.character);
-                // Defensive: fallback to string or log if _id is missing
                 let id = fav._id ? fav._id : (fav as any)._id ? (fav as any)._id : undefined;
-                if (!id) {
-                    console.warn('Favorite quote is missing _id:', fav);
-                }
                 return {
                     _id: id,
                     quote: fav.quote,
@@ -45,10 +38,25 @@ export default function favoriteRouter() {
                     movieName: movie ? movie.name : fav.movie
                 };
             });
-
+        // Character count map
+        const characterCount: Record<string, { name: string, count: number }> = {};
+        favoritesWithDetails.forEach(fav => {
+            if (!characterCount[fav.characterName]) {
+                characterCount[fav.characterName] = { name: fav.characterName, count: 0 };
+            }
+            characterCount[fav.characterName].count++;
+        });
+        // Filter by character if query param is present
+        let filteredFavorites = favoritesWithDetails;
+        let selectedCharacter = req.query.character as string;
+        if (selectedCharacter) {
+            filteredFavorites = favoritesWithDetails.filter(fav => fav.characterName === selectedCharacter);
+        }
         res.render("favorite", {
             user: req.session.user,
-            favoritesWithDetails: favoritesWithDetails
+            favoritesWithDetails: filteredFavorites,
+            characterCount: Object.values(characterCount),
+            selectedCharacter
         });
     });
 
